@@ -1,0 +1,117 @@
+/* Responsive START */
+@media only screen and (max-width: 850px) {
+    /* About US*/
+    .events-cont .event .text-side {
+      margin-left: 0%;
+    }
+    .events-cont .event .text-side h2 {
+      margin-left: 0%;
+    }
+    /* Header Mobile START */
+    .menu-button-bar {
+      display: block;
+    }
+    .nav-buttons-cont {
+      display: none;
+    }
+    #TeamHead {
+      margin-left: -55%;
+    }
+  
+    .logo-cont {
+      width: 100%;
+    }
+    .logo {
+      margin: 0 auto;
+      float: inherit;
+    }
+    /* Header Mobile END */
+    /*  */
+    /* Slider Mobile START */
+    .slider-cont {
+      height: 240px;
+      width: 100%;
+      position: relative;
+      overflow: auto;
+    }
+    .slider h1 {
+      margin: 5px 0;
+      font-size: calc(1vw + 30px);
+    }
+    .slider p {
+      max-width: 95%;
+    }
+    .sl-b {
+      bottom: 5px;
+    }
+    /* Slider Mobile END */
+    .h-text {
+      font-size: 25px;
+      padding-left: 5%;
+    }
+    .sec-text-cont {
+      width: 90%;
+    }
+    .h-emoji-cont {
+      width: 25px;
+      height: 25px;
+      margin: 0 10px;
+    }
+    .events-cont {
+      width: 95%;
+      padding: 0;
+    }
+    .events-cont .event {
+      padding: 10px 0;
+    }
+    .events-cont .event .img-side {
+      width: 100%;
+      margin-bottom: 3px;
+    }
+    .events-cont .event {
+      flex-wrap: wrap;
+    }
+    .events-cont .event .text-side {
+      width: 100%;
+      max-height: 300px;
+      text-align: inherit;
+      padding: 5px 5px;
+    }
+    .about-us-cont .event .text-side {
+      max-height: inherit !important;
+    }
+    .team-member {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 5px;
+    }
+    .sec-cont-s h1 {
+      line-height: 35px;
+    }
+    .sec-cont-s .team-member {
+      width: calc(45% - 10px);
+    }
+    .r-cont {
+      width: 100%;
+    }
+    .read-more {
+      padding: 10px 10px;
+    }
+    .sponsor {
+      width: 40%;
+    }
+    .sec-cont-s {
+      width: 100%;
+      padding: 0;
+    }
+    .sec-cont-s .sec-text-cont {
+      width: 90%;
+    }
+    /* Sidebar START */
+    .sidebar {
+      display: block !important;
+    }
+    /* Sidebar END */
+  }
+  /* Responsive END */
+  

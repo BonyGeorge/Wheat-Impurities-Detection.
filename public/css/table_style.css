@@ -1,0 +1,103 @@
+* {
+  margin: 0px;
+  font-family: sans-serif;
+}
+
+/* Tables */
+td,
+th {
+  text-align: center;
+  padding: 11px 7px;
+}
+
+#Display tr,
+#tblRequests tr {
+  color: black;
+  border: 1px solid black;
+}
+
+#Display tr:nth-child(1),
+#tblRequests tr:nth-child(1) {
+  background-image: linear-gradient(
+    to right,
+    rgb(0, 206, 209),
+    rgba(127, 255, 0)
+  );
+  color: black;
+}
+
+#Display tr:nth-child(even),
+#tblRequests tr:nth-child(even) {
+  background: #e8e8e8;
+  color: black;
+}
+
+.EditBtn,
+.EditBtn1,
+.modify {
+  background-color: #1c87c9;
+  border: none;
+  color: white;
+  padding: 3px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.9em;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+#Display,
+#tblRequests {
+  margin-top: 7vh;
+  border-collapse: collapse;
+  border: 1px solid black;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  display: table;
+}
+
+@media only screen and (max-width: 900px) {
+  #Display,
+  #tblRequests {
+    display: block;
+    overflow: auto;
+  }
+}
+
+.input {
+  background-color: white;
+  border: 1px solid darkgray;
+  box-shadow: 1px 1px 1px 0 lightgray inset;
+  overflow: auto;
+  margin-top: 5px;
+  margin-left: 20px;
+  padding: 2px 3px;
+  width: 100px;
+  color: black;
+}
+
+.tblsearch,
+.tblselect {
+  width: 40vw;
+  background: #fff;
+  color: #222;
+  border: 1px solid #eaeaea;
+  padding: 8px 8px;
+  font-size: 12pt;
+  margin-top: 2vh;
+  display: inline;
+}
+
+.tblsearch:focus {
+  border-color: #3971ed;
+}
+
+.tblsearch:hover {
+  border-color: #cecece;
+}
+
+.logo {
+  height: 30px;
+  width: 120px;
+}
