@@ -1,0 +1,96 @@
+sudo: false
+
+language: php
+
+branches:
+  except:
+    - /^release-\d+\.\d+\.\d+.*$/
+    - /^ghgfk-.*$/
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.local
+
+env:
+  global:
+    - COMPOSER_ARGS: "--no-interaction --ignore-platform-reqs"
+    - SITE_URL: https://heiglandreas.github.io/Org_Heigl_Ghostscript
+    - GH_USER_NAME: "Andreas Heigl"
+    - GH_USER_EMAIL: andreas@heigl.org
+    - GH_REF: github.com:heiglandreas/Org_Heigl_Ghostscript.git
+    - ENCRYPTION_LABEL: "f38516f65eab"
+  matrix:
+    - DEPS=latest
+    - DEPS=lowest
+
+addons:
+  apt:
+    packages:
+      - ghostscript
+
+php:
+- 5.6
+- 7.0
+- 7.1
+- 7.2
+- nightly
+
+matrix:
+  fast_finish : true
+  exclude:
+    - php: 7.2
+      env: DEPS=lowest
+  allow_failures:
+    - php: nightly
+    - php: 5.6
+
+stages:
+- checkcode
+- checkxml
+- test
+- coverage
+- deploy_docs
+
+jobs:
+  include:
+  - stage: checkcode
+    php: 7.2
+    script:
+    - composer cs-check
+  - stage: test
+    before_install:
+    - phpenv config-rm xdebug.ini || return 0
+    script:
+    - composer test
+  - stage: coverage
+    if: branch = master AND type = push
+    php: 7.2
+    env: TEST_COVERAGE=true
+    script:
+    - ls
+    after_script:
+    - travis_retry composer require $COMPOSER_ARGS --dev satooshi/php-coveralls ;
+    - composer test-coverage
+    - travis_retry composer upload-coverage
+  - stage: deploy_docs
+    if: branch = master AND type = push
+    php: 7.2
+    script:
+    - ls
+    after-script:
+    - echo "Preparing to build and deploy documentation"
+    - wget -O theme-installer.sh "https://raw.githubusercontent.com/zendframework/zf-mkdoc-theme/master/theme-installer.sh"
+    - chmod 755 theme-installer.sh
+    - ./theme-installer.sh
+    - ./zf-mkdoc-theme/deploy.sh
+    - echo "Completed deploying documentation"
+
+before_install:
+  - travis_retry composer self-update
+
+install:
+  - if [[ $DEPS == 'lowest' ]]; then COMPOSER_ARGS="--prefer-lowest --prefer-stable $COMPOSER_ARGS"; fi
+  - travis_retry composer update $COMPOSER_ARGS
+  - composer show --installed
+
