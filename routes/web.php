@@ -67,3 +67,7 @@ Route::get('/requestedusers/{user}', 'RequestedUserController@update');
 
 // Dashboard.
 Route::get('/dashboard', 'DashboardController@index');
+
+// Uploading Video/Image
+Route::get('/upload', 'UploadController@index');
+Route::post('/upload', 'UploadController@upload');

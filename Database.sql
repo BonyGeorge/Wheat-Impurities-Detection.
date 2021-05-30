@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 03, 2021 at 02:37 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.5
+-- Host: 127.0.0.1
+-- Generation Time: May 30, 2021 at 08:35 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -145,7 +146,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`, `user_id`) VALUES
 (15, '2020_12_20_230916_add_user_id_to_reset_table', 8, 1),
 (16, '2020_12_20_231551_add_user_id_to_migrations_table', 8, 1),
 (17, '2020_12_20_231627_add_user_id_to_failed_table', 8, 1),
-(18, '2020_12_20_233745_add_replied_by_table', 9, 1);
+(18, '2020_12_20_233745_add_replied_by_table', 9, 1),
+(19, '2021_05_30_181001_create_video_table', 10, 1),
+(20, '2021_05_30_182515_create_videos_table', 11, 1);
 
 -- --------------------------------------------------------
 
@@ -229,7 +232,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `isMale`, `address`, `mobile`, `remember_token`, `created_at`, `updated_at`, `type_id`, `accepted`) VALUES
-(1, 'Abanoub', 'abanoub@mail.com', NULL, '$2y$10$dbX6HZTD3zJKiEYAlx9SzeVAZF2CjBinG0gw3gljcOy6F1bNVR5h2', 1, NULL, NULL, 'lkm8Aj85yAAvmyHxrnABbxjvFuu5J1t9I6xluJR7YxSkLqzL17ZwAutyxpyE', '2020-12-16 11:08:08', '2020-12-16 11:08:08', 1, 0),
+(1, 'Abanoub', 'abanoub@mail.com', NULL, '$2y$10$dbX6HZTD3zJKiEYAlx9SzeVAZF2CjBinG0gw3gljcOy6F1bNVR5h2', 1, NULL, NULL, 't8R6S8nre5Jm31jkbZXjRnkB3NXRDkH1AyvOEW6cASRgFZb9x2sNbMCkdZDZ', '2020-12-16 11:08:08', '2020-12-16 11:08:08', 1, 0),
 (2, 'ayhaga', 'dlangworth@example.com', NULL, '$2y$10$bePwIEVCH.eRaREPFMjHHOOO8sD5aGeydEuIhSdIhCdbnVtnVUnly', 1, NULL, NULL, NULL, '2020-12-18 14:16:26', '2020-12-18 14:16:26', 2, 0),
 (3, 'ahmed', 'ahmed@ahmed.com', NULL, '$2y$10$hdHwvVBmVfG0Hwei0JiNhOlS69inpNOHKKdt3lZ7qOj/gvBAe9T7m', 1, NULL, NULL, NULL, '2020-12-18 14:20:14', '2020-12-18 14:20:14', 2, 0),
 (4, 'test', 'ceo@ceo.com', NULL, '$2y$10$rZPbkSA.QH/GLGABfsBEDOW2Zi6xVK6Vo7P60znqIgTd2nOhT8V66', 1, NULL, NULL, NULL, '2020-12-18 14:21:34', '2020-12-18 14:21:34', 2, 0),
@@ -260,6 +263,21 @@ CREATE TABLE `user_types` (
 INSERT INTO `user_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', NULL, NULL),
 (2, 'User', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `videos`
+--
+
+CREATE TABLE `videos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `video_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -359,6 +377,13 @@ ALTER TABLE `user_types`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `videos`
+--
+ALTER TABLE `videos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `videos_user_id_foreign` (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -402,7 +427,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -435,6 +460,12 @@ ALTER TABLE `user_types`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `videos`
+--
+ALTER TABLE `videos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -457,60 +488,10 @@ ALTER TABLE `images`
   ADD CONSTRAINT `images_land_id_foreign` FOREIGN KEY (`land_id`) REFERENCES `lands` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `images_in_frames`
+-- Constraints for table `videos`
 --
-ALTER TABLE `images_in_frames`
-  ADD CONSTRAINT `images_in_frames_frame_id_foreign` FOREIGN KEY (`frame_id`) REFERENCES `frames` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `images_in_frames_image_id_foreign` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `lands`
---
-ALTER TABLE `lands`
-  ADD CONSTRAINT `lands_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `messages`
---
-ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_replied_by_foreign` FOREIGN KEY (`replied_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD CONSTRAINT `migrations_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `notifications`
---
-ALTER TABLE `notifications`
-  ADD CONSTRAINT `notifications_land_id_foreign` FOREIGN KEY (`land_id`) REFERENCES `lands` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD CONSTRAINT `password_resets_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `reports`
---
-ALTER TABLE `reports`
-  ADD CONSTRAINT `reports_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `sensors`
---
-ALTER TABLE `sensors`
-  ADD CONSTRAINT `sensors_land_id_foreign` FOREIGN KEY (`land_id`) REFERENCES `lands` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_type_id_foreign` FOREIGN KEY (`type_id`) REFERENCES `user_types` (`id`) ON DELETE CASCADE;
+ALTER TABLE `videos`
+  ADD CONSTRAINT `videos_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

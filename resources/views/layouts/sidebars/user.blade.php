@@ -48,3 +48,11 @@
             <span>Send Mail</span>
           </a>
           </li>
+
+
+          <li class="sidebar">
+          <a href="{{ url('/upload') }}">
+            <i class="fa fa-upload"></i>
+            <span>Classification</span>
+          </a>
+          </li>
