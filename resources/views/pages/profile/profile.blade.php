@@ -1,126 +1,89 @@
+<!DOCTYPE html>
 @extends('layouts.sidebar')
 
 @section('content')
-
-
-<head>
- <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wheat | Profile.</title>
-    <link rel="icon" href=" 3.png">
-<h4 style="
-    color: dodgerblue;
-    margin-left: 20;">Your Profile</h4>
-    </style>
-
-    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-  <!-- Google Fonts Roboto -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-  <!-- Material Design Bootstrap -->
-  <link rel="stylesheet" href="{{asset('css/mdb.min.css')}}">
-  <!-- Your custom styles (optional) -->
-  <link rel="stylesheet" href="{{asset('css/style.css')}}">
-
-
-   <style>
-            @media screen  and (max-width: 800px) {
-                .container {
-                    display: block;
-                    width: 16em;
-                }
-                .square {
-
-                    height: 300em;
-                    width: 200em;
+<html>
+<title> Your Profile </title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+</style>
+<style>
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: purple;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  width: 150px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
 }
-            }
-            </style>
 
-</head>
-
-
-<div class="square" style="
-
-  height: 100%;
-  width: 80%;
-  background-color: #9DCE07;
+.button span {
+  cursor: pointer;
+  display: inline-block;
   position: relative;
-  left: 5%;
-  opacity: 10%;
-  border-radius: 30px;
-  "></div>
+  transition: 0.5s;
+}
 
-<div class="container" style="background: transperent;height: 550px;width: 1090px;" >
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
 
-<div class="container" style="background: transparent;border-radius: 10px;height: 30%;top: 30%;position: absolute;width: 38%;">
-<div class="container" style="background: #04A9D9;border-radius: 10px;margin-left: 7px;width: 65%;height: 229%;">
+.button:hover span {
+  padding-right: 25px;
+}
 
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
 
- <div class="col-12 col-lg-auto mb-3" style="width: 140px;">
-  </div>
-                    <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px;">
-                      @if(Auth::user()->filename == NULL)
+<body class="w3-light-grey">
 
-                      <img src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"  alt="Image" / width="70cm" height="70cm">
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1100px;">
 
-                      @else
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+  
+    <!-- Left Column -->
+    <div class="w3-third">
+    
+      <div class="w3-white w3-text-grey w3-card-4">
+        <div class="w3-display-container">
+        @if(Auth::user()->filename == NULL)
+          <img src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" style="width:100%" alt="Avatar">
+          @else
 
-                      <img src="{{asset('storage/ProfilePicture/' .Auth::user()->filename)}}"  alt="Image" / width="70cm" height="70cm">
+        <img src="{{asset('storage/ProfilePicture/' .Auth::user()->filename)}}"  alt="Image" / width="70cm" height="70cm">
 
-                      @endif
-</div>
+        @endif
 
-
-<br>
-
-<b><label style="font-size: 30px;">Basic Info</label></b>
-<br>
-<br>
-
-<div class="row">
-                          <div class="col">
-                            <div class="fa fa-male">
-                              <label>Name: </label>
-                          {{Auth::user()->name}}
-                            </div>
-                          </div>
-                        </div>
-
-<br>
-<div class="row">
-                          <div class="col">
-                            <div class="fa fa-id-card">
-                              <label>SSN: </label>
-                             {{Auth::user()->ssn}}
-                            </div>
-                          </div>
-                        </div>
-
-
-
-<br>
-
-                        <div class="row">
-
-                          <div class="col">
-                            <div class="fa fa-map-marker-alt">
-
-                              <label>Address</label>:
-                             {{Auth::user()->address}}
-                            </div>
-                          </div>
-                        </div>
-<br>
- <div class="row">
-                        <div class="col">
-                            <div class="fa fa-mars">
-                              <label>Gender: </label>
-
-                            @php
+          <div class="w3-display-bottomleft w3-container w3-text-black">
+            <h2> {{Auth::user()->name}}</h2>
+          </div>
+        </div>
+        <div class="w3-container">
+          <p><i class="fa fa-id-card fa-fw w3-margin-right w3-large w3-text-purple"></i> {{Auth::user()->ssn}}</p>
+          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-purple"></i> {{Auth::user()->address}}</p>
+          <p><i class="fa fa-mars fa-fw w3-margin-right w3-large w3-text-purple"></i>
+                        @php
                          if( Auth::user()->isMale == 1 )
                          {
                             echo 'Male';
@@ -129,73 +92,52 @@
                          {
                             echo 'Female';
                          }
-                      @endphp
+                      @endphp</p>
 
-                            </div>
-                          </div>
-                        </div>
+          <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-large w3-text-purple"></i>{{Auth::user()->birthday}}</p>
+          <hr>
+          <br>
+        </div>
+      </div><br>
 
-<br>
-                                                <div class="row">
+    <!-- End Left Column -->
+    </div>
 
-                          <div class="col">
-                            <div class="fa fa-birthday-cake">
-
-                              <label>Birthday</label>:
-                             {{Auth::user()->birthday}}
-                            </div>
-                          </div>
-                        </div>
-
-</div>
-</div>
-
-
-<div class="container" style="background-color:#04A9D9;border-radius: 10px;height: 50%;width: 42%;position: relative;bottom: 125%;left: 17%;">
-<div class="container" style="background: transparent;border-radius: 10px;height: 203px;margin-left: 7px;">
-
-<b><label style="font-size: 30px;">Contact Info</label></b>
-<br>
-<br>
-
-<div class="row">
-                          <div class="col">
-                            <div class="fa fa-envelope">
-                              <label>Email: </label>
-                             {{Auth::user()->email}}
-                            </div>
-                          </div>
-                        </div>
-
-
-<div class="row">
-                          <div class="col">
-                            <div class="fa fa-phone">
-                              <label>Mobile: </label>
-                          {{Auth::user()->mobile}}
-                            </div>
-                          </div>
-                        </div>
+    <!-- Right Column -->
+    <div class="w3-twothird">
+    
+    <div class="w3-container w3-card w3-white">
+        <h2 class="w3-text-black w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-purple"></i>Contact Info</h2>
+        <div class="w3-container">
+          <h6 class="w3-text-purple"><i class="fa fa-envelope fa-fw w3-margin-right"></i>E-mail</h6>
+          <p> {{Auth::user()->email}}</p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h6 class="w3-text-purble"><i class="fa fa-mobile fa-fw w3-margin-right"></i>Phone</h6>
+          <p> {{Auth::user()->mobile}}</p>
+          <hr>
+        </div>
+       
+      </div>
+      <button class="button" href="/profile/{{Auth::user()->id}}/edit" data-target="#editModel" style="vertical-align:middle"><span>Edit Profile </span></button>
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+  <!-- End Page Container -->
 </div>
 
-</div>
-</div>
-
-<a class="btn btn-success" role=" button" href="/profile/{{Auth::user()->id}}/edit" data-target="#editModel" style="
-
-    bottom: 620px;
-    left: 75%;
-    border-radius: 20px;
-    ">Edit Profile</a>
-</div>
 <footer id="footer">
   @include('layouts.footer')
 </footer>
-</html>
-@endsection
 
-  <!-- jQuery -->
-  <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
+</body>
+</html>
+ <!-- jQuery -->
+ <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
   <!-- Bootstrap tooltips -->
   <script type="text/javascript" src="{{asset('js/popper.min.js')}}"></script>
   <!-- Bootstrap core JavaScript -->
