@@ -21,12 +21,13 @@
 
         @endif
       </div>
-          <div class="user-info" style="margin-left:25%">
+      <br>
+      <div class="user-info" style="margin-left:35%">
       <span class="user-name" >
         <strong > {{ Auth::user()->name }}</strong>
       </span>
       <br>
-      <span class="user-role" style="margin-left:16%">User</span>
+      <span class="user-role" style="margin-left:22%">User</span>
         <span class="user-status">
         </span>
       </div>
@@ -41,6 +42,14 @@
           </a>
           </li>
           
+
+          <li class="sidebar">
+          <a href="{{ url('/dashboard') }}">
+            <i class="fa fa-chart-line"></i>
+            <span>Dashboard</span>
+          </a>
+          </li>
+
 
           <li class="sidebar">
           <a href="{{ url('/sendmail') }}">
