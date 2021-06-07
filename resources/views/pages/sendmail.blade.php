@@ -48,7 +48,7 @@
     }
 
     #mcontent {
-        border: 2px solid #0070FF;
+        border: 2px solid gold;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
@@ -56,7 +56,7 @@
     }
 
     #msubject {
-        border: 2px solid #0070FF;
+        border: 2px solid gold;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
@@ -129,11 +129,11 @@
     {!! Form::open(['action' => 'MailController@mail' , 'method' => 'POST']) !!}
         @csrf
     
-        <center>    {!! Form::label('User :') !!}    <span style="color: red"> *</span><br>
+        <legend style='text-align:center;'>{!! Form::label('User :') !!}    <span style="color: red"> *</span><br>
             {!! Form::select('selection', \App\User::pluck('email','id'), ['class' => 'mdb-select md-form', 'style' => 'margi-left:50%']) !!}    
               <br>
-        </center>
-        <legend style='text-align:center;'>From :</legend>
+              </legend> 
+        <legend style='text-align:center;'>From : {{Auth::user()->email}}</legend>
         <br>
 
         <legend style='text-align:center;'>Mail subject :  <span style="color: red"> *</span></legend> 
@@ -147,9 +147,7 @@
         </div>
         <br><br>
         <div class='mbutton'>
-            {!! Form::submit('Send to selected user', ['class' => 'btn btn-primary', 'value' => 'send1', 'name' => 'action', 'id' => 'send1', 'data-target' => '#centralModalSuccess', 'data-toggle' => 'modal']) !!}
-    <br>    {!! Form::submit('Send to all users', ['class' => 'btn btn-primary', 'value' => 'send0', 'name' => 'action', 'id' => 'send0', 'data-target' => '#centralModalSuccess', 'data-toggle' => 'modal']) !!}
-       
+            {!! Form::submit('Send To User', ['class' =>'btn btn-warning btn-rounded',  'value' => 'send1', 'name' => 'action', 'id' => 'send1', 'data-target' => '#centralModalSuccess', 'data-toggle' => 'modal']) !!}  
         </div>
     {!! Form::close() !!}
 </body>
