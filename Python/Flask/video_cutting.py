@@ -12,29 +12,35 @@ PATH = "G:\\Wheat_Impurities_System\\storage\\app\\public\\uploads"
 
 
 class VideoCutting (Resource):
-    def get(self, video_name):
+    def get(self, video_name, userid):
         thread = threading.Thread(target=self.cut, kwargs={
-                                  'video_name': video_name})
+                                  'video_name': video_name, 'userid': userid})
         thread.start()
         return jsonify({
             "status": "200"
         })
 
-    def cut(self, video_name):
+    def cut(self, video_name, userid):
         vidcap = cv2.VideoCapture(os.path.join(PATH, video_name))
         success, image = vidcap.read()
         count = 0
-        foldername = str(video_name)
+        folder = video_name
+        folder = folder.split('.')[0]
+        folder = os.path.join(PATH, folder)
+        folder = os.mkdir(folder)
+        path = os.path.join(PATH, folder)
+        print("Directory '%s' created" % path)
+
         while success:
-            cv2.imwrite(PATH + "\\frame%d.jpg" %
-                        count, image)     # save frame as JPEG file
+            cv2.imwrite(path + "/frame%d.jpg" %
+                        count, image)   # save frame as JPEG file
             success, image = vidcap.read()
-            print("Succes")
+            print("Success")
             count += 1
 
 
 api.add_resource(
-    VideoCutting, '/VideoCutting/<string:video_name>')
+    VideoCutting, '/VideoCutting/<string:video_name>/<string:userid>')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='YOUR_IP', port=8001)
+    app.run(debug=True, host='192.168.0.101', port=8001)
