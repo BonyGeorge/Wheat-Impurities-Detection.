@@ -18,27 +18,23 @@ use Illuminate\Support\Facades\Mail;
 // Welcome Page.
 Route::get('/', function () 
 {
-   /* if (!Auth::guest())
+   if (!Auth::guest())
     {
-        if (Auth::user()->type_id == 2)
+        if (Auth::user()->type_id == 1)
         {
             $users =  User::NotAccepted()->paginate(20);
             return view('users.requestUsers', compact('users'));    
         }
-        else if (Auth::user()->type_id == 1)
+        else if (Auth::user()->type_id == 2)
         { 
-            $products=Product::all();
-            $products = Product::paginate(10);
-            return view('order.make_order',compact('products'));
+            
+            return view('pages.dashboard.dashboard');
         }
     }
     else
     { 
         return view('welcome');
-    }*/
-
-    return view('welcome');
-
+    }
 });
 
 // Check if the user has accepted the verfication mail.

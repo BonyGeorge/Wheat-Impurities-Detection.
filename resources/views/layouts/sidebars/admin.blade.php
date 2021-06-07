@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar-wrapper">
   <div class="sidebar-content">
     <div class="sidebar-brand">
-      <a href="/dashboard"><img src="logo_no.png" alt="" style="height:50px;width:50px;"></a>
+      <a href="/"><img src="logo_no.png" alt="" style="height:50px;width:50px;"></a>
       <div id="close-sidebar">
         <i class="fas fa-times"></i>
       </div>
