@@ -27,7 +27,7 @@
           
             <table class="table table-bordered table-responsive-md table-striped text-center">
               <thead>
-          <tr style="background-image: linear-gradient(90deg, rgba(20, 20, 231, 0.258) 0%, rgb(245, 56, 9) 35%, rgb(23, 238, 191) 100%);">
+                <tr style="background-image: linear-gradient(90deg, rgba(174,174,179,0.258140756302521) 0%, rgba(245,222,9,1) 35%, rgba(255,215,0,1) 100%);">
                
     
                   <th class="text-center"> Reading Hour </th>
