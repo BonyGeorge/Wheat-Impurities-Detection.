@@ -65,7 +65,7 @@
 
           <li class="sidebar">
             <a href="/weather_getData">
-              <i class="fa fa-cloud-moon-rain"></i>
+              <i class="fa fa-cloud"></i>
               <span>Weather Informations</span>
             </a>
             </li>
