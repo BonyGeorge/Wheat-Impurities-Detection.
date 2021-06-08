@@ -9,6 +9,23 @@ use App\Weather;
 class WeatherController extends Controller
 {
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function __construct()
+    {       
+        
+    }
+
+    public function index()
+    {
+        $WeatherInfo = Weather::all();
+        return view('users.weather', compact('WeatherInfo'));
+    }
+
 //To get the API data from OpenWeatherMap
     public function getdata()
     {
@@ -44,6 +61,13 @@ class WeatherController extends Controller
     {
         Weather::truncate();
         return back()->with('success', 'Weather has been deleted.');
+    }
+
+
+
+    public function weatherNotification()
+    {
+        
     }
 
 }

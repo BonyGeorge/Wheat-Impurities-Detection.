@@ -41,7 +41,6 @@
             <span>Your Profile</span>
           </a>
           </li>
-          
 
           <li class="sidebar">
           <a href="{{ url('/dashboard') }}">
@@ -50,14 +49,12 @@
           </a>
           </li>
 
-
           <li class="sidebar">
           <a href="{{ url('/sendmail') }}">
             <i class="fa fa-envelope"></i>
             <span>Send Mail</span>
           </a>
           </li>
-
 
           <li class="sidebar">
           <a href="{{ url('/upload') }}">
@@ -69,7 +66,7 @@
           <li class="sidebar">
             <a href="/weather_getData">
               <i class="fa fa-cloud-moon-rain"></i>
-              <span>Weather Data</span>
+              <span>Weather Informations</span>
             </a>
             </li>
 

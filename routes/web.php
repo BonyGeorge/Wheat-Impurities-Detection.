@@ -70,4 +70,4 @@ Route::post('/upload', 'UploadController@upload');
 
 // Weather API data
 // Route::get('/weather_sched', 'WeatherController@schedule');
-Route::get('/weather_getData', 'WeatherController@getdata');
+Route::get('/weather_getData', 'WeatherController@index');
