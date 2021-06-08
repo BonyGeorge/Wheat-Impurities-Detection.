@@ -3,22 +3,26 @@
 namespace Illuminate\Database\Eloquent;
 
 use ArrayAccess;
-use Exception;
+use Illuminate\Contracts\Broadcasting\HasBroadcastChannel;
 use Illuminate\Contracts\Queue\QueueableCollection;
 use Illuminate\Contracts\Queue\QueueableEntity;
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Database\ConnectionResolverInterface as Resolver;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\Concerns\AsPivot;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection as BaseCollection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use JsonSerializable;
+use LogicException;
 
-abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializable, QueueableEntity, UrlRoutable
+abstract class Model implements Arrayable, ArrayAccess, HasBroadcastChannel, Jsonable, JsonSerializable, QueueableEntity, UrlRoutable
 {
     use Concerns\HasAttributes,
         Concerns\HasEvents,
@@ -77,6 +81,13 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * @var array
      */
     protected $withCount = [];
+
+    /**
+     * Indicates whether lazy loading will be prevented on this model.
+     *
+     * @var bool
+     */
+    public $preventsLazyLoading = false;
 
     /**
      * The number of models to return for pagination.
@@ -142,16 +153,30 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     protected static $ignoreOnTouch = [];
 
     /**
+     * Indicates whether lazy loading should be restricted on all models.
+     *
+     * @var bool
+     */
+    protected static $modelsShouldPreventLazyLoading = false;
+
+    /**
+     * The callback that is responsible for handling lazy loading violations.
+     *
+     * @var callable|null
+     */
+    protected static $lazyLoadingViolationCallback;
+
+    /**
      * The name of the "created at" column.
      *
-     * @var string
+     * @var string|null
      */
     const CREATED_AT = 'created_at';
 
     /**
      * The name of the "updated at" column.
      *
-     * @var string
+     * @var string|null
      */
     const UPDATED_AT = 'updated_at';
 
@@ -331,6 +356,28 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
+     * Prevent model relationships from being lazy loaded.
+     *
+     * @param  bool  $value
+     * @return void
+     */
+    public static function preventLazyLoading($value = true)
+    {
+        static::$modelsShouldPreventLazyLoading = $value;
+    }
+
+    /**
+     * Register a callback that is responsible for handling lazy loading violations.
+     *
+     * @param  callable  $callback
+     * @return void
+     */
+    public static function handleLazyLoadingViolationUsing(callable $callback)
+    {
+        static::$lazyLoadingViolationCallback = $callback;
+    }
+
+    /**
      * Fill the model with an array of attributes.
      *
      * @param  array  $attributes
@@ -343,8 +390,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         $totallyGuarded = $this->totallyGuarded();
 
         foreach ($this->fillableFromArray($attributes) as $key => $value) {
-            $key = $this->removeTableFromKey($key);
-
             // The developers may choose to place some attributes in the "fillable" array
             // which means only those attributes may be set through mass assignment to
             // the model, and all others will just get ignored for security reasons.
@@ -387,17 +432,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         }
 
         return $this->getTable().'.'.$column;
-    }
-
-    /**
-     * Remove the table name from a given key.
-     *
-     * @param  string  $key
-     * @return string
-     */
-    protected function removeTableFromKey($key)
-    {
-        return Str::contains($key, '.') ? last(explode('.', $key)) : $key;
     }
 
     /**
@@ -519,6 +553,26 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
+     * Eager load relationships on the polymorphic relation of a model.
+     *
+     * @param  string  $relation
+     * @param  array  $relations
+     * @return $this
+     */
+    public function loadMorph($relation, $relations)
+    {
+        if (! $this->{$relation}) {
+            return $this;
+        }
+
+        $className = get_class($this->{$relation});
+
+        $this->{$relation}->load($relations[$className] ?? []);
+
+        return $this;
+    }
+
+    /**
      * Eager load relations on the model if they are not already eager loaded.
      *
      * @param  array|string  $relations
@@ -534,6 +588,21 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
+     * Eager load relation's column aggregations on the model.
+     *
+     * @param  array|string  $relations
+     * @param  string  $column
+     * @param  string  $function
+     * @return $this
+     */
+    public function loadAggregate($relations, $column, $function = null)
+    {
+        $this->newCollection([$this])->loadAggregate($relations, $column, $function);
+
+        return $this;
+    }
+
+    /**
      * Eager load relation counts on the model.
      *
      * @param  array|string  $relations
@@ -543,9 +612,152 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     {
         $relations = is_string($relations) ? func_get_args() : $relations;
 
-        $this->newCollection([$this])->loadCount($relations);
+        return $this->loadAggregate($relations, '*', 'count');
+    }
+
+    /**
+     * Eager load relation max column values on the model.
+     *
+     * @param  array|string  $relations
+     * @param  string  $column
+     * @return $this
+     */
+    public function loadMax($relations, $column)
+    {
+        return $this->loadAggregate($relations, $column, 'max');
+    }
+
+    /**
+     * Eager load relation min column values on the model.
+     *
+     * @param  array|string  $relations
+     * @param  string  $column
+     * @return $this
+     */
+    public function loadMin($relations, $column)
+    {
+        return $this->loadAggregate($relations, $column, 'min');
+    }
+
+    /**
+     * Eager load relation's column summations on the model.
+     *
+     * @param  array|string  $relations
+     * @param  string  $column
+     * @return $this
+     */
+    public function loadSum($relations, $column)
+    {
+        return $this->loadAggregate($relations, $column, 'sum');
+    }
+
+    /**
+     * Eager load relation average column values on the model.
+     *
+     * @param  array|string  $relations
+     * @param  string  $column
+     * @return $this
+     */
+    public function loadAvg($relations, $column)
+    {
+        return $this->loadAggregate($relations, $column, 'avg');
+    }
+
+    /**
+     * Eager load related model existence values on the model.
+     *
+     * @param  array|string  $relations
+     * @return $this
+     */
+    public function loadExists($relations)
+    {
+        return $this->loadAggregate($relations, '*', 'exists');
+    }
+
+    /**
+     * Eager load relationship column aggregation on the polymorphic relation of a model.
+     *
+     * @param  string  $relation
+     * @param  array  $relations
+     * @param  string  $column
+     * @param  string  $function
+     * @return $this
+     */
+    public function loadMorphAggregate($relation, $relations, $column, $function = null)
+    {
+        if (! $this->{$relation}) {
+            return $this;
+        }
+
+        $className = get_class($this->{$relation});
+
+        $this->{$relation}->loadAggregate($relations[$className] ?? [], $column, $function);
 
         return $this;
+    }
+
+    /**
+     * Eager load relationship counts on the polymorphic relation of a model.
+     *
+     * @param  string  $relation
+     * @param  array  $relations
+     * @return $this
+     */
+    public function loadMorphCount($relation, $relations)
+    {
+        return $this->loadMorphAggregate($relation, $relations, '*', 'count');
+    }
+
+    /**
+     * Eager load relationship max column values on the polymorphic relation of a model.
+     *
+     * @param  string  $relation
+     * @param  array  $relations
+     * @param  string  $column
+     * @return $this
+     */
+    public function loadMorphMax($relation, $relations, $column)
+    {
+        return $this->loadMorphAggregate($relation, $relations, $column, 'max');
+    }
+
+    /**
+     * Eager load relationship min column values on the polymorphic relation of a model.
+     *
+     * @param  string  $relation
+     * @param  array  $relations
+     * @param  string  $column
+     * @return $this
+     */
+    public function loadMorphMin($relation, $relations, $column)
+    {
+        return $this->loadMorphAggregate($relation, $relations, $column, 'min');
+    }
+
+    /**
+     * Eager load relationship column summations on the polymorphic relation of a model.
+     *
+     * @param  string  $relation
+     * @param  array  $relations
+     * @param  string  $column
+     * @return $this
+     */
+    public function loadMorphSum($relation, $relations, $column)
+    {
+        return $this->loadMorphAggregate($relation, $relations, $column, 'sum');
+    }
+
+    /**
+     * Eager load relationship average column values on the polymorphic relation of a model.
+     *
+     * @param  string  $relation
+     * @param  array  $relations
+     * @param  string  $column
+     * @return $this
+     */
+    public function loadMorphAvg($relation, $relations, $column)
+    {
+        return $this->loadMorphAggregate($relation, $relations, $column, 'avg');
     }
 
     /**
@@ -591,29 +803,23 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             return $query->{$method}($column, $amount, $extra);
         }
 
-        $this->incrementOrDecrementAttributeValue($column, $amount, $extra, $method);
-
-        return $query->where(
-            $this->getKeyName(), $this->getKey()
-        )->{$method}($column, $amount, $extra);
-    }
-
-    /**
-     * Increment the underlying attribute value and sync with original.
-     *
-     * @param  string  $column
-     * @param  float|int  $amount
-     * @param  array  $extra
-     * @param  string  $method
-     * @return void
-     */
-    protected function incrementOrDecrementAttributeValue($column, $amount, $extra, $method)
-    {
-        $this->{$column} = $this->{$column} + ($method === 'increment' ? $amount : $amount * -1);
+        $this->{$column} = $this->isClassDeviable($column)
+            ? $this->deviateClassCastableAttribute($method, $column, $amount)
+            : $this->{$column} + ($method === 'increment' ? $amount : $amount * -1);
 
         $this->forceFill($extra);
 
-        $this->syncOriginalAttribute($column);
+        if ($this->fireModelEvent('updating') === false) {
+            return false;
+        }
+
+        return tap($this->setKeysForSaveQuery($query)->{$method}($column, $amount, $extra), function () use ($column) {
+            $this->syncChanges();
+
+            $this->fireModelEvent('updated', false);
+
+            $this->syncOriginalAttribute($column);
+        });
     }
 
     /**
@@ -630,6 +836,22 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         }
 
         return $this->fill($attributes)->save($options);
+    }
+
+    /**
+     * Update the model in the database without raising any events.
+     *
+     * @param  array  $attributes
+     * @param  array  $options
+     * @return bool
+     */
+    public function updateQuietly(array $attributes = [], array $options = [])
+    {
+        if (! $this->exists) {
+            return false;
+        }
+
+        return $this->fill($attributes)->saveQuietly($options);
     }
 
     /**
@@ -658,6 +880,19 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         }
 
         return true;
+    }
+
+    /**
+     * Save the model to the database without raising any events.
+     *
+     * @param  array  $options
+     * @return bool
+     */
+    public function saveQuietly(array $options = [])
+    {
+        return static::withoutEvents(function () use ($options) {
+            return $this->save($options);
+        });
     }
 
     /**
@@ -780,12 +1015,35 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
+     * Set the keys for a select query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function setKeysForSelectQuery($query)
+    {
+        $query->where($this->getKeyName(), '=', $this->getKeyForSelectQuery());
+
+        return $query;
+    }
+
+    /**
+     * Get the primary key value for a select query.
+     *
+     * @return mixed
+     */
+    protected function getKeyForSelectQuery()
+    {
+        return $this->original[$this->getKeyName()] ?? $this->getKey();
+    }
+
+    /**
      * Set the keys for a save update query.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function setKeysForSaveQuery(Builder $query)
+    protected function setKeysForSaveQuery($query)
     {
         $query->where($this->getKeyName(), '=', $this->getKeyForSaveQuery());
 
@@ -799,8 +1057,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     protected function getKeyForSaveQuery()
     {
-        return $this->original[$this->getKeyName()]
-                        ?? $this->getKey();
+        return $this->original[$this->getKeyName()] ?? $this->getKey();
     }
 
     /**
@@ -825,7 +1082,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         // If the model has an incrementing key, we can use the "insertGetId" method on
         // the query builder, which will give us back the final inserted ID for this
         // table from the database. Not all tables have to be incrementing though.
-        $attributes = $this->getAttributes();
+        $attributes = $this->getAttributesForInsert();
 
         if ($this->getIncrementing()) {
             $this->insertAndSetId($query, $attributes);
@@ -871,15 +1128,14 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Destroy the models for the given IDs.
      *
-     * @param  \Illuminate\Support\Collection|array|int  $ids
+     * @param  \Illuminate\Support\Collection|array|int|string  $ids
      * @return int
      */
     public static function destroy($ids)
     {
-        // We'll initialize a count here so we will return the total number of deletes
-        // for the operation. The developers can then check this number as a boolean
-        // type value or get this total count of records deleted for logging, etc.
-        $count = 0;
+        if ($ids instanceof EloquentCollection) {
+            $ids = $ids->modelKeys();
+        }
 
         if ($ids instanceof BaseCollection) {
             $ids = $ids->all();
@@ -887,10 +1143,16 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
         $ids = is_array($ids) ? $ids : func_get_args();
 
+        if (count($ids) === 0) {
+            return 0;
+        }
+
         // We will actually pull the models from the database table and call delete on
         // each of them individually so that their events get fired properly with a
         // correct set of attributes in case the developers wants to check these.
         $key = ($instance = new static)->getKeyName();
+
+        $count = 0;
 
         foreach ($instance->whereIn($key, $ids)->get() as $model) {
             if ($model->delete()) {
@@ -906,14 +1168,14 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      *
      * @return bool|null
      *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function delete()
     {
         $this->mergeAttributesFromClassCasts();
 
         if (is_null($this->getKeyName())) {
-            throw new Exception('No primary key defined on model.');
+            throw new LogicException('No primary key defined on model.');
         }
 
         // If the model doesn't exist, there is nothing to delete so we'll just return
@@ -945,7 +1207,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Force a hard delete on a soft deleted model.
      *
-     * This method protects developers from running forceDelete when trait is missing.
+     * This method protects developers from running forceDelete when the trait is missing.
      *
      * @return bool|null
      */
@@ -1108,6 +1370,29 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
+     * Determine if the model has a given scope.
+     *
+     * @param  string  $scope
+     * @return bool
+     */
+    public function hasNamedScope($scope)
+    {
+        return method_exists($this, 'scope'.ucfirst($scope));
+    }
+
+    /**
+     * Apply the given named scope if possible.
+     *
+     * @param  string  $scope
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public function callNamedScope($scope, array $parameters = [])
+    {
+        return $this->{'scope'.ucfirst($scope)}(...$parameters);
+    }
+
+    /**
      * Convert the model instance to an array.
      *
      * @return array
@@ -1158,9 +1443,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             return;
         }
 
-        return static::newQueryWithoutScopes()
+        return $this->setKeysForSelectQuery($this->newQueryWithoutScopes())
                         ->with(is_string($with) ? func_get_args() : $with)
-                        ->where($this->getKeyName(), $this->getKey())
                         ->first();
     }
 
@@ -1176,7 +1460,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         }
 
         $this->setRawAttributes(
-            static::newQueryWithoutScopes()->findOrFail($this->getKey())->attributes
+            $this->setKeysForSelectQuery($this->newQueryWithoutScopes())->firstOrFail()->attributes
         );
 
         $this->load(collect($this->relations)->reject(function ($relation) {
@@ -1522,7 +1806,16 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     public function resolveChildRouteBinding($childType, $value, $field)
     {
-        return $this->{Str::plural(Str::camel($childType))}()->where($field, $value)->first();
+        $relationship = $this->{Str::plural(Str::camel($childType))}();
+
+        $field = $field ?: $relationship->getRelated()->getRouteKeyName();
+
+        if ($relationship instanceof HasManyThrough ||
+            $relationship instanceof BelongsToMany) {
+            return $relationship->where($relationship->getRelated()->getTable().'.'.$field, $value)->first();
+        } else {
+            return $relationship->where($field, $value)->first();
+        }
     }
 
     /**
@@ -1556,6 +1849,36 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         $this->perPage = $perPage;
 
         return $this;
+    }
+
+    /**
+     * Determine if lazy loading is disabled.
+     *
+     * @return bool
+     */
+    public static function preventsLazyLoading()
+    {
+        return static::$modelsShouldPreventLazyLoading;
+    }
+
+    /**
+     * Get the broadcast channel route definition that is associated with the given entity.
+     *
+     * @return string
+     */
+    public function broadcastChannelRoute()
+    {
+        return str_replace('\\', '.', get_class($this)).'.{'.Str::camel(class_basename($this)).'}';
+    }
+
+    /**
+     * Get the broadcast channel name that is associated with the given entity.
+     *
+     * @return string
+     */
+    public function broadcastChannel()
+    {
+        return str_replace('\\', '.', get_class($this)).'.'.$this->getKey();
     }
 
     /**
@@ -1661,6 +1984,10 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             return $this->$method(...$parameters);
         }
 
+        if ($resolver = (static::$relationResolvers[get_class($this)][$method] ?? null)) {
+            return $resolver($this);
+        }
+
         return $this->forwardCallTo($this->newQuery(), $method, $parameters);
     }
 
@@ -1708,5 +2035,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     public function __wakeup()
     {
         $this->bootIfNotBooted();
+
+        $this->initializeTraits();
     }
 }

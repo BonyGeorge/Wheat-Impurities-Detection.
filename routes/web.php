@@ -18,25 +18,7 @@ use Illuminate\Support\Facades\Mail;
 // Welcome Page.
 Route::get('/', function () 
 {
-   /* if (!Auth::guest())
-    {
-        if (Auth::user()->type_id == 2)
-        {
-            $users =  User::NotAccepted()->paginate(20);
-            return view('users.requestUsers', compact('users'));    
-        }
-        else if (Auth::user()->type_id == 1)
-        { 
-            $products=Product::all();
-            $products = Product::paginate(10);
-            return view('order.make_order',compact('products'));
-        }
-    }
-    else
-    { 
-        return view('welcome');
-    }*/
-
+   
     return view('welcome');
 
 });
@@ -71,3 +53,7 @@ Route::get('/dashboard', 'DashboardController@index');
 // Uploading Video/Image
 Route::get('/upload', 'UploadController@index');
 Route::post('/upload', 'UploadController@upload');
+
+// Weather API data
+// Route::get('/weather_sched', 'WeatherController@schedule');
+Route::get('/weather_getData', 'WeatherController@getdata');

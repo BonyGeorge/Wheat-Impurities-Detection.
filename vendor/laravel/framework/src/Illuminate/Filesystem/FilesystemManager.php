@@ -125,11 +125,11 @@ class FilesystemManager implements FactoryContract
 
         $driverMethod = 'create'.ucfirst($name).'Driver';
 
-        if (method_exists($this, $driverMethod)) {
-            return $this->{$driverMethod}($config);
-        } else {
+        if (! method_exists($this, $driverMethod)) {
             throw new InvalidArgumentException("Driver [{$name}] is not supported.");
         }
+
+        return $this->{$driverMethod}($config);
     }
 
     /**
@@ -208,8 +208,10 @@ class FilesystemManager implements FactoryContract
 
         $options = $config['options'] ?? [];
 
+        $streamReads = $config['stream_reads'] ?? false;
+
         return $this->adapt($this->createFlysystem(
-            new S3Adapter(new S3Client($s3Config), $s3Config['bucket'], $root, $options), $config
+            new S3Adapter(new S3Client($s3Config), $s3Config['bucket'], $root, $options, $streamReads), $config
         ));
     }
 
@@ -241,7 +243,7 @@ class FilesystemManager implements FactoryContract
     {
         $cache = Arr::pull($config, 'cache');
 
-        $config = Arr::only($config, ['visibility', 'disable_asserts', 'url']);
+        $config = Arr::only($config, ['visibility', 'disable_asserts', 'url', 'temporary_url']);
 
         if ($cache) {
             $adapter = new CachedAdapter($adapter, $this->createCacheStore($cache));
@@ -324,7 +326,7 @@ class FilesystemManager implements FactoryContract
      */
     public function getDefaultCloudDriver()
     {
-        return $this->app['config']['filesystems.cloud'];
+        return $this->app['config']['filesystems.cloud'] ?? 's3';
     }
 
     /**
@@ -340,6 +342,19 @@ class FilesystemManager implements FactoryContract
         }
 
         return $this;
+    }
+
+    /**
+     * Disconnect the given disk and remove from local cache.
+     *
+     * @param  string|null  $name
+     * @return void
+     */
+    public function purge($name = null)
+    {
+        $name = $name ?? $this->getDefaultDriver();
+
+        unset($this->disks[$name]);
     }
 
     /**

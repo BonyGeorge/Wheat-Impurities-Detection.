@@ -46,14 +46,25 @@ class ClosureCommand extends Command
         $parameters = [];
 
         foreach ((new ReflectionFunction($this->callback))->getParameters() as $parameter) {
-            if (isset($inputs[$parameter->name])) {
-                $parameters[$parameter->name] = $inputs[$parameter->name];
+            if (isset($inputs[$parameter->getName()])) {
+                $parameters[$parameter->getName()] = $inputs[$parameter->getName()];
             }
         }
 
         return (int) $this->laravel->call(
             $this->callback->bindTo($this, $this), $parameters
         );
+    }
+
+    /**
+     * Set the description for the command.
+     *
+     * @param  string  $description
+     * @return $this
+     */
+    public function purpose($description)
+    {
+        return $this->describe($description);
     }
 
     /**

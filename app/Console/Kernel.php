@@ -3,8 +3,10 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
+use Illuminate\Http\Request;
+use App\Http\Controllers;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -15,16 +17,26 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
     ];
-
     /**
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+    // $schedule->command('inspire')->hourly();
+        $schedule->call(function(){
+             print("dataa");
+         
+        app('App\Http\Controllers\WeatherController')->getdata();
+        })->everyMinute();
+
+         $schedule->call(function () {
+            app('App\Http\Controllers\WeatherController')->deleteWeatherData();
+        })->daily();
+
     }
 
     /**

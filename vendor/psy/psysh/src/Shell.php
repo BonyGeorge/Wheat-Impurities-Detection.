@@ -19,6 +19,7 @@ use Psy\Exception\ThrowUpException;
 use Psy\Exception\TypeErrorException;
 use Psy\ExecutionLoop\ProcessForker;
 use Psy\ExecutionLoop\RunkitReloader;
+use Psy\Formatter\TraceFormatter;
 use Psy\Input\ShellInput;
 use Psy\Input\SilentInput;
 use Psy\TabCompletion\Matcher;
@@ -47,12 +48,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Shell extends Application
 {
-    const VERSION = 'v0.10.3';
+    const VERSION = 'v0.10.8';
 
-    const PROMPT      = '>>> ';
+    const PROMPT = '>>> ';
     const BUFF_PROMPT = '... ';
-    const REPLAY      = '--> ';
-    const RETVAL      = '=> ';
+    const REPLAY = '--> ';
+    const RETVAL = '=> ';
 
     private $config;
     private $cleaner;
@@ -73,6 +74,7 @@ class Shell extends Application
     private $matchers = [];
     private $commandsMatcher;
     private $lastExecSuccess = true;
+    private $nonInteractive = false;
 
     /**
      * Create a new Psy Shell.
@@ -81,14 +83,14 @@ class Shell extends Application
      */
     public function __construct(Configuration $config = null)
     {
-        $this->config        = $config ?: new Configuration();
-        $this->cleaner       = $this->config->getCodeCleaner();
-        $this->context       = new Context();
-        $this->includes      = [];
-        $this->readline      = $this->config->getReadline();
-        $this->inputBuffer   = [];
-        $this->codeStack     = [];
-        $this->stdoutBuffer  = '';
+        $this->config = $config ?: new Configuration();
+        $this->cleaner = $this->config->getCodeCleaner();
+        $this->context = new Context();
+        $this->includes = [];
+        $this->readline = $this->config->getReadline();
+        $this->inputBuffer = [];
+        $this->codeStack = [];
+        $this->stdoutBuffer = '';
         $this->loopListeners = $this->getDefaultLoopListeners();
 
         parent::__construct('Psy Shell', self::VERSION);
@@ -233,7 +235,7 @@ class Shell extends Application
      */
     protected function getTabCompletionMatchers()
     {
-        @\trigger_error('getTabCompletionMatchers is no longer used', E_USER_DEPRECATED);
+        @\trigger_error('getTabCompletionMatchers is no longer used', \E_USER_DEPRECATED);
     }
 
     /**
@@ -389,6 +391,8 @@ class Shell extends Application
      */
     private function doNonInteractiveRun($rawOutput)
     {
+        $this->nonInteractive = true;
+
         // If raw output is enabled (or output is piped) we don't want startup messages.
         if (!$rawOutput && !$this->config->outputIsPiped()) {
             $this->output->writeln($this->getHeader());
@@ -398,7 +402,13 @@ class Shell extends Application
 
         $this->beforeRun();
         $this->loadIncludes();
-        $this->getInput(false);
+
+        // For non-interactive execution, read only from the input buffer or from piped input.
+        // Otherwise it'll try to readline and hang, waiting for user input with no indication of
+        // what's holding things up.
+        if (!empty($this->inputBuffer) || $this->config->inputIsPiped()) {
+            $this->getInput(false);
+        }
 
         if ($this->hasCode()) {
             $ret = $this->execute($this->flushCode());
@@ -406,6 +416,7 @@ class Shell extends Application
         }
 
         $this->afterRun();
+        $this->nonInteractive = false;
 
         return 0;
     }
@@ -435,7 +446,7 @@ class Shell extends Application
             \set_error_handler([$__psysh__, 'handleError']);
             foreach ($__psysh__->getIncludes() as $__psysh_include__) {
                 try {
-                    include $__psysh_include__;
+                    include_once $__psysh_include__;
                 } catch (\Error $_e) {
                     $__psysh__->writeException(ErrorException::fromError($_e));
                 } catch (\Exception $_e) {
@@ -529,12 +540,12 @@ class Shell extends Application
         }
 
         $code = $this->codeBuffer;
-        \array_push($code, $input);
-        $tokens = @\token_get_all('<?php ' . \implode("\n", $code));
+        $code[] = $input;
+        $tokens = @\token_get_all('<?php '.\implode("\n", $code));
         $last = \array_pop($tokens);
 
         return $last === '"' || $last === '`' ||
-            (\is_array($last) && \in_array($last[0], [T_ENCAPSED_AND_WHITESPACE, T_START_HEREDOC, T_COMMENT]));
+            (\is_array($last) && \in_array($last[0], [\T_ENCAPSED_AND_WHITESPACE, \T_START_HEREDOC, \T_COMMENT]));
     }
 
     /**
@@ -589,6 +600,13 @@ class Shell extends Application
                 $code = $return;
             }
         }
+
+        $output = $this->output;
+        if ($output instanceof ConsoleOutput) {
+            $output = $output->getErrorOutput();
+        }
+
+        $output->writeln(\sprintf('<aside>%s</aside>', OutputFormatter::escape($code)), ConsoleOutput::VERBOSITY_DEBUG);
 
         return $code;
     }
@@ -679,7 +697,7 @@ class Shell extends Application
         $newVars = [];
 
         foreach ($this->getScopeVariables(false) as $key => $value) {
-            if (!array_key_exists($key, $currentVars) || $currentVars[$key] !== $value) {
+            if (!\array_key_exists($key, $currentVars) || $currentVars[$key] !== $value) {
                 $newVars[$key] = $value;
             }
         }
@@ -819,7 +837,7 @@ class Shell extends Application
             }
 
             $this->codeBuffer[] = $silent ? new SilentInput($code) : $code;
-            $this->code         = $this->cleaner->clean($this->codeBuffer, $this->config->requireSemicolons());
+            $this->code = $this->cleaner->clean($this->codeBuffer, $this->config->requireSemicolons());
         } catch (\Exception $e) {
             // Add failed code blocks to the readline history.
             $this->addCodeBufferToHistory();
@@ -892,7 +910,7 @@ class Shell extends Application
         $command = $this->getCommand($input);
 
         if (empty($command)) {
-            throw new \InvalidArgumentException('Command not found: ' . $input);
+            throw new \InvalidArgumentException('Command not found: '.$input);
         }
 
         $input = new ShellInput(\str_replace('\\', '\\\\', \rtrim($input, " \t\n\r\0\x0B;")));
@@ -916,7 +934,7 @@ class Shell extends Application
     public function resetCodeBuffer()
     {
         $this->codeBuffer = [];
-        $this->code       = false;
+        $this->code = false;
     }
 
     /**
@@ -966,9 +984,9 @@ class Shell extends Application
 
         list($codeBuffer, $codeBufferOpen, $code) = \array_pop($this->codeStack);
 
-        $this->codeBuffer     = $codeBuffer;
+        $this->codeBuffer = $codeBuffer;
         $this->codeBufferOpen = $codeBufferOpen;
-        $this->code           = $code;
+        $this->code = $code;
     }
 
     /**
@@ -1029,9 +1047,9 @@ class Shell extends Application
      * @param string $out
      * @param int    $phase Output buffering phase
      */
-    public function writeStdout($out, $phase = PHP_OUTPUT_HANDLER_END)
+    public function writeStdout($out, $phase = \PHP_OUTPUT_HANDLER_END)
     {
-        $isCleaning = $phase & PHP_OUTPUT_HANDLER_CLEAN;
+        $isCleaning = $phase & \PHP_OUTPUT_HANDLER_CLEAN;
 
         // Incremental flush
         if ($out !== '' && !$isCleaning) {
@@ -1041,7 +1059,7 @@ class Shell extends Application
         }
 
         // Output buffering is done!
-        if ($phase & PHP_OUTPUT_HANDLER_END) {
+        if ($phase & \PHP_OUTPUT_HANDLER_END) {
             // Write an extra newline if stdout didn't end with one
             if ($this->outputWantsNewline) {
                 if (!$this->config->rawOutput() && !$this->config->outputIsPiped()) {
@@ -1086,7 +1104,7 @@ class Shell extends Application
         } else {
             $indent = \str_repeat(' ', \strlen(static::RETVAL));
             $formatted = $this->presentValue($ret);
-            $formatted = static::RETVAL . \str_replace(PHP_EOL, PHP_EOL . $indent, $formatted);
+            $formatted = static::RETVAL.\str_replace(\PHP_EOL, \PHP_EOL.$indent, $formatted);
         }
 
         $this->output->writeln($formatted);
@@ -1104,14 +1122,34 @@ class Shell extends Application
      */
     public function writeException(\Exception $e)
     {
-        $this->lastExecSuccess = false;
-        $this->context->setLastException($e);
+        // No need to write the break exception during a non-interactive run.
+        if ($e instanceof BreakException && $this->nonInteractive) {
+            $this->resetCodeBuffer();
+
+            return;
+        }
+
+        // Break exceptions don't count :)
+        if (!$e instanceof BreakException) {
+            $this->lastExecSuccess = false;
+            $this->context->setLastException($e);
+        }
 
         $output = $this->output;
         if ($output instanceof ConsoleOutput) {
             $output = $output->getErrorOutput();
         }
         $output->writeln($this->formatException($e));
+
+        // Include an exception trace (as long as this isn't a BreakException).
+        if (!$e instanceof BreakException && $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $trace = TraceFormatter::formatTrace($e);
+            if (\count($trace) !== 0) {
+                $output->writeln('--');
+                $output->write($trace, true);
+                $output->writeln('');
+            }
+        }
 
         $this->resetCodeBuffer();
     }
@@ -1149,9 +1187,9 @@ class Shell extends Application
         }
 
         $message = \preg_replace(
-            "#(\\w:)?(/\\w+)*/src/Execution(?:Loop)?Closure.php\(\d+\) : eval\(\)'d code#",
+            "#(\\w:)?([\\\\/]\\w+)*[\\\\/]src[\\\\/]Execution(?:Loop)?Closure.php\(\d+\) : eval\(\)'d code#",
             "eval()'d code",
-            \str_replace('\\', '/', $message)
+            $message
         );
 
         $message = \str_replace(" in eval()'d code", ' in Psy Shell code', $message);
@@ -1173,13 +1211,13 @@ class Shell extends Application
         $severity = $e->getSeverity();
         if ($severity & \error_reporting()) {
             switch ($severity) {
-                case E_WARNING:
-                case E_NOTICE:
-                case E_CORE_WARNING:
-                case E_COMPILE_WARNING:
-                case E_USER_WARNING:
-                case E_USER_NOTICE:
-                case E_STRICT:
+                case \E_WARNING:
+                case \E_NOTICE:
+                case \E_CORE_WARNING:
+                case \E_COMPILE_WARNING:
+                case \E_USER_WARNING:
+                case \E_USER_NOTICE:
+                case \E_STRICT:
                     return 'warning';
 
                 default:
@@ -1250,7 +1288,7 @@ class Shell extends Application
         //
         // n.b. Technically we can't handle all of these in userland code, but
         // we'll list 'em all for good measure
-        if ($errno & (E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | E_RECOVERABLE_ERROR)) {
+        if ($errno & (\E_ERROR | \E_PARSE | \E_CORE_ERROR | \E_COMPILE_ERROR | \E_USER_ERROR | \E_RECOVERABLE_ERROR)) {
             ErrorException::throwException($errno, $errstr, $errfile, $errline);
         }
 
@@ -1375,13 +1413,27 @@ class Shell extends Application
     /**
      * Get the current version of Psy Shell.
      *
+     * @deprecated call self::getVersionHeader instead
+     *
      * @return string
      */
     public function getVersion()
     {
-        $separator = $this->config->useUnicode() ? '—' : '-';
+        return self::getVersionHeader($this->config->useUnicode());
+    }
 
-        return \sprintf('Psy Shell %s (PHP %s %s %s)', self::VERSION, PHP_VERSION, $separator, PHP_SAPI);
+    /**
+     * Get a pretty header including the current version of Psy Shell.
+     *
+     * @param bool $useUnicode
+     *
+     * @return string
+     */
+    public static function getVersionHeader($useUnicode = false)
+    {
+        $separator = $useUnicode ? '—' : '-';
+
+        return \sprintf('Psy Shell %s (PHP %s %s %s)', self::VERSION, \PHP_VERSION, $separator, \PHP_SAPI);
     }
 
     /**
@@ -1399,7 +1451,7 @@ class Shell extends Application
      */
     protected function autocomplete($text)
     {
-        @\trigger_error('Tab completion is provided by the AutoCompleter service', E_USER_DEPRECATED);
+        @\trigger_error('Tab completion is provided by the AutoCompleter service', \E_USER_DEPRECATED);
     }
 
     /**
@@ -1447,7 +1499,7 @@ class Shell extends Application
      */
     protected function writeVersionInfo()
     {
-        if (PHP_SAPI !== 'cli') {
+        if (\PHP_SAPI !== 'cli') {
             return;
         }
 

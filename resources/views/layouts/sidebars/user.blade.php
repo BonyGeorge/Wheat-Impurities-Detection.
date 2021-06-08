@@ -65,3 +65,17 @@
             <span>Classification</span>
           </a>
           </li>
+
+          <li class="sidebar">
+            <a href="/weather_getData">
+              <i class="fa fa-cloud-moon-rain"></i>
+              <span>Weather Data</span>
+            </a>
+            </li>
+
+            <li class="sidebar">
+              <a href="/wnotifications">
+                <i class="fa fa-bell"></i>
+                <span>Weather Notifications</span>
+              </a>
+              </li>

@@ -8,44 +8,54 @@ class AuthRouteMethods
      * Register the typical authentication routes for an application.
      *
      * @param  array  $options
-     * @return void
+     * @return callable
      */
     public function auth()
     {
         return function ($options = []) {
-            // Authentication Routes...
-            $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
-            $this->post('login', 'Auth\LoginController@login');
-            $this->post('logout', 'Auth\LoginController@logout')->name('logout');
+            $namespace = class_exists($this->prependGroupNamespace('Auth\LoginController')) ? null : 'App\Http\Controllers';
 
-            // Registration Routes...
-            if ($options['register'] ?? true) {
-                $this->get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-                $this->post('register', 'Auth\RegisterController@register');
-            }
+            $this->group(['namespace' => $namespace], function() use($options) {
+                // Login Routes...
+                if ($options['login'] ?? true) {
+                    $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
+                    $this->post('login', 'Auth\LoginController@login');
+                }
 
-            // Password Reset Routes...
-            if ($options['reset'] ?? true) {
-                $this->resetPassword();
-            }
+                // Logout Routes...
+                if ($options['logout'] ?? true) {
+                    $this->post('logout', 'Auth\LoginController@logout')->name('logout');
+                }
 
-            // Password Confirmation Routes...
-            if ($options['confirm'] ??
-                class_exists($this->prependGroupNamespace('Auth\ConfirmPasswordController'))) {
-                $this->confirmPassword();
-            }
+                // Registration Routes...
+                if ($options['register'] ?? true) {
+                    $this->get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+                    $this->post('register', 'Auth\RegisterController@register');
+                }
 
-            // Email Verification Routes...
-            if ($options['verify'] ?? false) {
-                $this->emailVerification();
-            }
+                // Password Reset Routes...
+                if ($options['reset'] ?? true) {
+                    $this->resetPassword();
+                }
+
+                // Password Confirmation Routes...
+                if ($options['confirm'] ??
+                    class_exists($this->prependGroupNamespace('Auth\ConfirmPasswordController'))) {
+                    $this->confirmPassword();
+                }
+
+                // Email Verification Routes...
+                if ($options['verify'] ?? false) {
+                    $this->emailVerification();
+                }
+            });
         };
     }
 
     /**
      * Register the typical reset password routes for an application.
      *
-     * @return void
+     * @return callable
      */
     public function resetPassword()
     {
@@ -60,7 +70,7 @@ class AuthRouteMethods
     /**
      * Register the typical confirm password routes for an application.
      *
-     * @return void
+     * @return callable
      */
     public function confirmPassword()
     {
@@ -73,7 +83,7 @@ class AuthRouteMethods
     /**
      * Register the typical email verification routes for an application.
      *
-     * @return void
+     * @return callable
      */
     public function emailVerification()
     {

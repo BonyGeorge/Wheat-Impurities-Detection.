@@ -52,4 +52,10 @@ class MessageController extends Controller
         $message->delete();
         return back()->with('success', 'Message has been deleted.');
     }
+
+    public function deleteAllMesssages()
+    {
+        Message::truncate();
+        return back()->with('success', 'Message has been deleted.');
+    }
 }

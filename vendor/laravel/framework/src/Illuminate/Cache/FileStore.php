@@ -3,13 +3,16 @@
 namespace Illuminate\Cache;
 
 use Exception;
+use Illuminate\Contracts\Cache\LockProvider;
 use Illuminate\Contracts\Cache\Store;
+use Illuminate\Contracts\Filesystem\LockTimeoutException;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Filesystem\LockableFile;
 use Illuminate\Support\InteractsWithTime;
 
-class FileStore implements Store
+class FileStore implements Store, LockProvider
 {
-    use InteractsWithTime, RetrievesMultipleKeys;
+    use InteractsWithTime, HasCacheLock, RetrievesMultipleKeys;
 
     /**
      * The Illuminate Filesystem instance.
@@ -75,12 +78,49 @@ class FileStore implements Store
         );
 
         if ($result !== false && $result > 0) {
-            if (! is_null($this->filePermission)) {
-                $this->files->chmod($path, $this->filePermission);
-            }
+            $this->ensureFileHasCorrectPermissions($path);
 
             return true;
         }
+
+        return false;
+    }
+
+    /**
+     * Store an item in the cache if the key doesn't exist.
+     *
+     * @param  string  $key
+     * @param  mixed  $value
+     * @param  int  $seconds
+     * @return bool
+     */
+    public function add($key, $value, $seconds)
+    {
+        $this->ensureCacheDirectoryExists($path = $this->path($key));
+
+        $file = new LockableFile($path, 'c+');
+
+        try {
+            $file->getExclusiveLock();
+        } catch (LockTimeoutException $e) {
+            $file->close();
+
+            return false;
+        }
+
+        $expire = $file->read(10);
+
+        if (empty($expire) || $this->currentTime() >= $expire) {
+            $file->truncate()
+                ->write($this->expiration($seconds).serialize($value))
+                ->close();
+
+            $this->ensureFileHasCorrectPermissions($path);
+
+            return true;
+        }
+
+        $file->close();
 
         return false;
     }
@@ -96,6 +136,22 @@ class FileStore implements Store
         if (! $this->files->exists(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0777, true, true);
         }
+    }
+
+    /**
+     * Ensure the cache file has the correct permissions.
+     *
+     * @param  string  $path
+     * @return void
+     */
+    protected function ensureFileHasCorrectPermissions($path)
+    {
+        if (is_null($this->filePermission) ||
+            intval($this->files->chmod($path), 8) == $this->filePermission) {
+            return;
+        }
+
+        $this->files->chmod($path, $this->filePermission);
     }
 
     /**
@@ -165,7 +221,9 @@ class FileStore implements Store
         }
 
         foreach ($this->files->directories($this->directory) as $directory) {
-            if (! $this->files->deleteDirectory($directory)) {
+            $deleted = $this->files->deleteDirectory($directory);
+
+            if (! $deleted || $this->files->exists($directory)) {
                 return false;
             }
         }
