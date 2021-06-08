@@ -13,11 +13,6 @@ use App\Mail\Mailing;
 class MailController extends Controller
 {
 
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -43,8 +38,7 @@ class MailController extends Controller
                     'mailcontent' => $mail['mailcontent'] ,
                     'selection' => $mail['selection']
                 ];
-                
-        
+                       
                 $user = User::findOrFail($mail['selection']);
         
                 Mail::send('mails.custommail', $MailData, function($message) use($user){

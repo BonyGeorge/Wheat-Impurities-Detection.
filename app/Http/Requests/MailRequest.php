@@ -13,7 +13,7 @@ class MailRequest extends FormRequest
      */
     public function authorize()
     {
-        if(Auth::user()->type_id > 1)
+        if(Auth::user()->type_id == 1)
         {
             return true;
         }

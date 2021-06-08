@@ -15,11 +15,11 @@ class UploadController extends Controller
         return view('pages.upload.upload');
     }
 
-    public function SendAPI($video_name) 
+    public function SendAPI($video_name, $userid) 
     {
        /* $video_name = str_replace('/', '-', $video_name);
         print($video_name);*/
-        $response = Http::get("http://YOUR_IP:8001/VideoCutting/$video_name");
+        $response = Http::get("http://192.168.0.101:8001/VideoCutting/$video_name/$userid");
     
         if ($response->status() == 200) {
             return "Video Sent Successful.";
@@ -46,10 +46,10 @@ class UploadController extends Controller
             $Video->user_id = $id;
             $Video->save();
   
-            UploadController::SendAPI($Video->name);
+            UploadController::SendAPI($Video->name, $id);
 
             return back()
-            ->with('success','File has been uploaded.')
+            ->with('success','Video has been uploaded.')
             ->with('file', $fileName);
         }
    }

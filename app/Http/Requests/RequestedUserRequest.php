@@ -23,15 +23,9 @@ class RequestedUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'salary' => 'required' ,
-        ];
     }
 
     public function messages()
     {
-        return [
-            'salary.required' => ' Salary is Required',
-        ];
     }
 }

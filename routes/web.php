@@ -18,9 +18,23 @@ use Illuminate\Support\Facades\Mail;
 // Welcome Page.
 Route::get('/', function () 
 {
-   
-    return view('welcome');
-
+   if (!Auth::guest())
+    {
+        if (Auth::user()->type_id == 1)
+        {
+            $users =  User::NotAccepted()->paginate(20);
+            return view('users.requestUsers', compact('users'));    
+        }
+        else if (Auth::user()->type_id == 2)
+        { 
+            
+            return view('pages.dashboard.dashboard');
+        }
+    }
+    else
+    { 
+        return view('welcome');
+    }
 });
 
 // Check if the user has accepted the verfication mail.

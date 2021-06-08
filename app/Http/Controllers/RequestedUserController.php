@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RequestedUserRequest;
+use Illuminate\Http\Request;
 use Gate;
 use App\User;
 use App\User_types;
@@ -16,12 +16,6 @@ class RequestedUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
-    public function __construct()
-    {
-        
-    }
-    
     
      public function index()
     {
@@ -42,12 +36,11 @@ class RequestedUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RequestedUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
 
         $user->type_id = (int) $request->selection;
         $user->id = $request->id;
-        $user->salary = $request->salary;
         $user->accepted = 1;
         
         $user->save();
