@@ -2,6 +2,7 @@
 @extends('layouts.sidebar')
 
 @section('content')
+
 <html>
 <title> Your Profile </title>
 <meta charset="UTF-8">

@@ -22,6 +22,49 @@
             list-style: none;
         }
     </style>
+    <style>
+.button {
+  display: inline-block;
+  border-radius: 40px;
+  background-color:goldenrod;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  margin-left: 400px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+
 </head>
 
 <body>
@@ -51,7 +94,7 @@
                 <label class="custom-file-label" for="chooseFile">Select Video</label>
             </div>
 
-            <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">
+            <button class="button" type="submit" name="submit"  class="btn btn-primary btn-block mt-4" >
                 Upload Videos
             </button>
         </form>
