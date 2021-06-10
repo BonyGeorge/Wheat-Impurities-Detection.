@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 use App\Weather;
+use App\WNotification;
 
 class WeatherController extends Controller
 {
@@ -20,13 +21,19 @@ class WeatherController extends Controller
         
     }
 
+    public function wIndex()
+    {
+        $WeatherNotification = WNotification::all();
+        return view('users.wnotification', compact('WeatherNotification'));
+    }
+
     public function index()
     {
         $WeatherInfo = Weather::all();
         return view('users.weather', compact('WeatherInfo'));
     }
 
-//To get the API data from OpenWeatherMap
+    //To get the API data from OpenWeatherMap and Make notification
     public function getdata()
     {
         $location = 'Cairo';
@@ -40,7 +47,6 @@ class WeatherController extends Controller
         $windspeed = $weather['wind']['speed'];
         $winddegree = $weather['wind']['deg'];
 
-
         $WeatherData = new Weather;
         $WeatherData->temprature = $temp; 
         $WeatherData->humidity = $hum; 
@@ -48,26 +54,24 @@ class WeatherController extends Controller
         $WeatherData->wind_direction = $winddegree; 
 
         $WeatherData->save();
-        /*print("Hii");
-        print($temp);
-        print($hum);
-        print($windspeed);
-        print($winddegree);*/
 
-        //return view('users.weather')->with('weather', [$temp, $hum, $windspeed, $winddegree]);
+        // Notification Condition
+        if ($temp >= 2  && $hum >= 2 && $windspeed >= 2)
+        {
+            print("data Added to Notification database");
+            $user = \App\User::find(1);
+    
+            $details = [
+            'body' => "May wheat rust happens later"
+            ];
+            $user->notify(new \App\Notifications\TaskComplete($details));
+        }
     }
 
     public function deleteWeatherData()
     {
         Weather::truncate();
         return back()->with('success', 'Weather has been deleted.');
-    }
-
-
-
-    public function weatherNotification()
-    {
-        
     }
 
 }

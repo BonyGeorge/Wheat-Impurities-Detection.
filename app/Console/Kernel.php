@@ -28,10 +28,15 @@ class Kernel extends ConsoleKernel
     {
     // $schedule->command('inspire')->hourly();
         $schedule->call(function(){
-             print("data Added in database");
+             print("data Added to Weather database");
          
         app('App\Http\Controllers\WeatherController')->getdata();
-        })->hourly();
+        })->everyMinute();
+
+    //     $schedule->call(function(){
+
+    //    app('App\Http\Controllers\WeatherController')->weatherNotification();
+    //    })->everyMinute();    
 
          $schedule->call(function () {
             print("data deleted from database");
