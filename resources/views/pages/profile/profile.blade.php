@@ -16,7 +16,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 .button {
   display: inline-block;
   border-radius: 4px;
-  background-color: purple;
+  background-color:goldenrod;
   border: none;
   color: #FFFFFF;
   text-align: center;
@@ -80,9 +80,9 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
           </div>
         </div>
         <div class="w3-container">
-          <p><i class="fa fa-id-card fa-fw w3-margin-right w3-large w3-text-purple"></i> {{Auth::user()->ssn}}</p>
-          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-purple"></i> {{Auth::user()->address}}</p>
-          <p><i class="fa fa-mars fa-fw w3-margin-right w3-large w3-text-purple"></i>
+          <p><i class="fa fa-id-card fa-fw w3-margin-right w3-large w3-text-yellow"></i> {{Auth::user()->ssn}}</p>
+          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-yellow"></i> {{Auth::user()->address}}</p>
+          <p><i class="fa fa-mars fa-fw w3-margin-right w3-large w3-text-yellow"></i>
                         @php
                          if( Auth::user()->isMale == 1 )
                          {
@@ -94,7 +94,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
                          }
                       @endphp</p>
 
-          <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-large w3-text-purple"></i>{{Auth::user()->birthday}}</p>
+          <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-large w3-text-yellow"></i>{{Auth::user()->birthday}}</p>
           <hr>
           <br>
         </div>
@@ -107,14 +107,14 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     <div class="w3-twothird">
     
     <div class="w3-container w3-card w3-white">
-        <h2 class="w3-text-black w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-purple"></i>Contact Info</h2>
+        <h2 class="w3-text-black w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-yellow"></i>Contact Info</h2>
         <div class="w3-container">
-          <h6 class="w3-text-purple"><i class="fa fa-envelope fa-fw w3-margin-right"></i>E-mail</h6>
+          <h6 class="w3-text-yellow"><i class="fa fa-envelope fa-fw w3-margin-right"></i>E-mail</h6>
           <p> {{Auth::user()->email}}</p>
           <hr>
         </div>
         <div class="w3-container">
-          <h6 class="w3-text-purble"><i class="fa fa-mobile fa-fw w3-margin-right"></i>Phone</h6>
+          <h6 class="w3-text-yellow"><i class="fa fa-mobile fa-fw w3-margin-right"></i>Phone</h6>
           <p> {{Auth::user()->mobile}}</p>
           <hr>
         </div>
