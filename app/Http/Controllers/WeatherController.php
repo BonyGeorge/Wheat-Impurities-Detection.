@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Weather;
 use App\WNotification;
 
+
 class WeatherController extends Controller
 {
 
@@ -32,7 +33,6 @@ class WeatherController extends Controller
         $WeatherInfo = Weather::all();
         return view('users.weather', compact('WeatherInfo'));
     }
-
     //To get the API data from OpenWeatherMap and Make notification
     public function getdata()
     {
@@ -56,11 +56,11 @@ class WeatherController extends Controller
         $WeatherData->save();
 
         // Notification Condition
-        if ($temp >= 2  && $hum >= 2 && $windspeed >= 2)
+        if ($temp >= 7 && $temp <= 15 && $hum >= 60 && $windspeed >= 9.4)
         {
-            print("data Added to Notification database");
+            //$id= Auth::user()->id;
             $user = \App\User::find(1);
-    
+            //auth()->user()->id)
             $details = [
             'body' => "May wheat rust happens later"
             ];
