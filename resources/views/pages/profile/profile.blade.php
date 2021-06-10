@@ -120,7 +120,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
         </div>
        
       </div>
-      <button class="button" href="/profile/{{Auth::user()->id}}/edit" data-target="#editModel" style="vertical-align:middle"><span>Edit Profile </span></button>
+      <a type = "button" class="button" href="/profile/{{Auth::user()->id}}/edit" type="submit" style="vertical-align:middle"><span>Edit Profile </span></a>
     <!-- End Right Column -->
     </div>
     
