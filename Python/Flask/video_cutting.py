@@ -1,15 +1,24 @@
 import os
 import cv2
 import threading
+import mysql.connector
+
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
 from flask import Flask
 
-
 app = Flask(__name__)
 api = Api(app)
-PATH = "G:\\Wheat_Impurities_System\\storage\\app\\public\\uploads"
 
+mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="wheat_system"
+    )
+mycursor = mydb.cursor()
+PATH = "G:/D/Wheat-Impurities-Detection/storage/app/public/uploads"
+SAVE_PATH = "/storage/app/public/uploads"
 
 class VideoCutting (Resource):
     def get(self, video_name, userid):
@@ -22,25 +31,28 @@ class VideoCutting (Resource):
 
     def cut(self, video_name, userid):
         vidcap = cv2.VideoCapture(os.path.join(PATH, video_name))
+        vidcap.set(cv2.CV_CAP_PROP_POS_FRAMES, frame_number-1)
         success, image = vidcap.read()
         count = 0
-        folder = video_name
-        folder = folder.split('.')[0]
-        folder = os.path.join(PATH, folder)
-        folder = os.mkdir(folder)
-        path = os.path.join(PATH, folder)
-        print("Directory '%s' created" % path)
+        userid = int(userid)
 
         while success:
-            cv2.imwrite(path + "/frame%d.jpg" %
+            cv2.imwrite(PATH + "/frame%d.jpg" %
                         count, image)   # save frame as JPEG file
+
+            pth = SAVE_PATH + "/frame%d.jpg" % count
+            mycursor.execute("""INSERT INTO frames (user_id, path) 
+                                VALUES (%d, '%s');""" % (userid, pth))
+            
+            print("Success entering frame: %d" %count + " At path: " + pth)                    
             success, image = vidcap.read()
-            print("Success")
             count += 1
 
+        mydb.commit()
+        
 
 api.add_resource(
     VideoCutting, '/VideoCutting/<string:video_name>/<string:userid>')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='192.168.0.101', port=8001)
+    app.run(debug=True, host='0.0.0.0', port=8001)
