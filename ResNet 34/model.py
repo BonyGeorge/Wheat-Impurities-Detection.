@@ -4,7 +4,11 @@ import tensorflow as tf
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+import torchvision.models as models
+from PIL import Image
 from tensorflow.keras.layers import *
+from torchvision import transforms
+
 
 class ResidualBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1, kernel_size=3, padding=1, bias=False):
@@ -42,7 +46,7 @@ class ResNet34(nn.Module):
         self.block1 = nn.Sequential(
             nn.Conv2d(1, 64, kernel_size=2, stride=2, padding=3, bias=False),
             nn.BatchNorm2d(64),
-            nn.ReLU(True)
+            nn.ReLU(True),
         )
         
         self.block2 = nn.Sequential(
@@ -102,11 +106,25 @@ class ResNet34(nn.Module):
         """
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         model = ResNet34().to(device)   
-        model.load_state_dict(torch.load(r'G:\D\Wheat-Impurities-Detection\Python\Resnet 34\resnet34_model.pth', map_location=torch.device('cpu')))
+        model.load_state_dict(torch.load(r'G:\D\Wheat-Impurities-Detection\Python\Resnet 34\test.pth', map_location=torch.device('cpu')))
 
         image = self.prepo()
         pred = model.eval(image)
         return pred
 
-model = ResNet34()
-model.predict(r"C:\Users\hp\Downloads\test3.jpg")
+model = models.resnet34()
+model.load_state_dict(torch.load(r'G:\D\Wheat-Impurities-Detection\Python\Resnet 34\best_resnet34_aug2.pth',
+                                 map_location=torch.device('cpu')), strict=False)
+model.eval()
+
+transform = transforms.Compose(
+    [transforms.ToTensor(),
+     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])  # Same as for your validation data, e.g. Resize, ToTensor, Normalize, ...
+
+img = Image.open(r"C:\Users\hp\Downloads\test3.jpg")  # Load image as PIL.Image
+x = transform(img)  # Preprocess image
+x = x.unsqueeze(0)  # Add batch dimension
+
+output = model(x)  # Forward pass
+pred = torch.argmax(output, 1)  # Get predicted class if multi-class classification
+print('Image predicted as ', pred)
