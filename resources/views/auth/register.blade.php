@@ -53,19 +53,6 @@
                             </div>
                         </div>
                         
-                        <div class="form-group row">
-                            <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile: ') }}</label>
-                            <span style="color: red"> *</span>
-                            <div class="col-md-6">
-                                <input id="mobile" type="phone"max="11" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('mobile')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password: ') }}</label>

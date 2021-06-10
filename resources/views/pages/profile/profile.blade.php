@@ -16,7 +16,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 <style>
 .button {
   display: inline-block;
-  border-radius: 4px;
+  border-radius: 40px;
   background-color:goldenrod;
   border: none;
   color: #FFFFFF;
@@ -27,6 +27,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
+  margin-left: 300px;
 }
 
 .button span {
@@ -80,6 +81,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
             <h2> {{Auth::user()->name}}</h2>
           </div>
         </div>
+        <br>
         <div class="w3-container">
           <p><i class="fa fa-id-card fa-fw w3-margin-right w3-large w3-text-yellow"></i> {{Auth::user()->ssn}}</p>
           <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-yellow"></i> {{Auth::user()->address}}</p>
