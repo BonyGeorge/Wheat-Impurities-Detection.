@@ -29,6 +29,8 @@
                 table th {
                     font-weight: normal;
                 }
+                
+    
     
             @media screen and (max-width: 800px) {
                 .horizontal {
@@ -69,6 +71,8 @@
                             <h2 style="text-decoration: underline solid  #FFBA01; font-size: 2em;" class="Vision">Our Vision :-</h2>
                             <br>
                             <p style="font-size: 1.5em;" class="Vpara"> Our system would detect all the wheat impurities and monitor the wheather changes to prevent wheat rust .</p>
+                            
+
                         </div>
                     </th>
                     <br><br><br>
@@ -95,7 +99,7 @@
             <div class="col-lg-4">
               <div class="info">
                 <div class="address">
-                    <i class="fas fa-search-location"></i>
+                    <i class="fas fa-search-location "></i>
                   <h4>Location:</h4>
                   <p>Cairo, Egypt.</p>
                 </div>

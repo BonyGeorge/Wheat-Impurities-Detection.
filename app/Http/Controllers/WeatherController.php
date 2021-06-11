@@ -60,9 +60,10 @@ class WeatherController extends Controller
         {
             //$id= Auth::user()->id;
             $user = \App\User::find(1);
+            print("data Added to Weather Notification database");
             //auth()->user()->id)
             $details = [
-            'body' => "May wheat rust happens later"
+            'body' => "May wheat rust happens later due to change of weather"
             ];
             $user->notify(new \App\Notifications\TaskComplete($details));
         }
