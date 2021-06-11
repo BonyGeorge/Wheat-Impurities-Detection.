@@ -38,7 +38,7 @@
                     $i++;
                   @endphp
                 <td class="pt-3-half">{{$Weather->created_at}}</td>
-                <td class="pt-3-half">{{$Weather->data}}</td>
+                <td class="pt-3-half">{{substr(strip_tags($Weather->data),2,53)}}</td>
                   @empty
           <td colspan="9"><center><-   No Notifications yet -></center> </td>
       </tr>
