@@ -54,6 +54,13 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   opacity: 1;
   right: 0;
 }
+.w3-content{
+  height: 600px;
+  max-width: 1100px;
+  margin-block-end: 300px;
+  margin-bottom: 100px;
+  
+}
 </style>
 
 <body class="w3-light-grey">
@@ -119,6 +126,9 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
         </div>
        
       </div>
+      <br>
+      <br>
+      <br>
       <a type = "button" class="button" href="/profile/{{Auth::user()->id}}/edit" type="submit" style="vertical-align:middle"><span>Edit Profile </span></a>
     <!-- End Right Column -->
     </div>
@@ -129,9 +139,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <!-- End Page Container -->
   </div>
                          
-<footer id="footer">
-  @include('layouts.footer')
-</footer>
 
 </body>
 </html>
@@ -143,3 +150,8 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{{asset('js/mdb.min.js')}}"></script>
+
+  <footer id="footer">
+  @include('layouts.footer')
+</footer>
+@endsection
