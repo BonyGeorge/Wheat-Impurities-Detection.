@@ -11,17 +11,6 @@ class MailRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
-        if(Auth::user()->type_id == 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
     /**
      * Get the validation rules that apply to the request.

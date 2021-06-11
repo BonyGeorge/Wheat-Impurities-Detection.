@@ -47,6 +47,6 @@ class MailController extends Controller
         
                 return back()->with('success', 'Mail has been sent.');
         
-        
+                
     }
 }
