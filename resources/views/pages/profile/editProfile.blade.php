@@ -78,85 +78,77 @@ img{
 
 
 </head>
+<<<<<<< HEAD
 <body >
 
 <form action="/action_page.php" style="max-width:500px;margin:auto" >
+=======
+<body style="
+background-image: url({{asset('wheat.jpg')}})">
+    @extends('layouts.sidebar')
+    
+    @section('content')
+
+<form method="POST" action="/profile/{{Auth::user()->id}}" enctype="multipart/form-data" style="max-width:500px;margin:auto" >
+    @csrf
+    @method('PATCH')
+>>>>>>> f33f1eb533edccf68918717a3cfe2ce6711bf83a
     <fieldset>
         <legend>Profile Page</legend>
 
 
     <div style="align-self: ">
+    @if(Auth::user()->filename == NULL)
     <img src="{{asset('profile.png')}}">
+
+    @else
+    
+    <img src="{{asset('storage/ProfilePicture/' .Auth::user()->filename)}}"  alt="Image">
+    @endif
     </div> 
 
   <div class="input-container">
     <i class="fa fa-user icon"></i>
-    <input class="input-field" type="text" placeholder="Username" id="usrnm" required>
+    <input class="input-field" type="text" name="name" value="{{Auth::user()->name}}" id="usrnm">
   </div>
 
   <div class="input-container">
     <i class="fa fa-envelope icon"></i>
-    <input class="input-field" type="email" placeholder="Email" id="email" required>
+    <input class="input-field" type="email" name="email" value="{{Auth::user()->email}}" id="email">
   </div>
+
+  <div class="input-container">
+    <i class="fa fa-envelope icon"></i>
+    <input class="input-field" type="email" name="address" value="{{Auth::user()->address}}" id="email">
+  </div>
+
   <div class="input-container">
     <i class="fa fa-phone icon"></i>
-    <input class= "number" type="number" placeholder="Phone number" id="zipcode-number" maxlength="11" min="0" max="99999999999" style="  width: 100%; padding: 10px;" required >
+    <input class= "number" type="number" name="phone" value="{{Auth::user()->phone}}" id="zipcode-number" maxlength="11" min="0" max="99999999999" style="  width: 100%; padding: 10px;">
   </div>
 
-  <div class="input-container">
-    <i class="fa fa-key icon"></i>
-    <input class="input-field" type="password" placeholder="Password" id="password"required>
-  </div>
-
-  <div class="input-container">
-    <i class="fa fa-key icon"></i>
-    <input class="input-field" type="password" placeholder="Confirm Password"  id="ConfirmPassword" required>
-  </div>
+  
 
   <div class= "input-container">
       <i class ="fa icon">&#xf224;</i>
-      <select name="gen" id="gen" >
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>      
+      <select name="isMale" id="gen" >
+        <option value="1">Male</option>
+        <option value="0">Female</option>      
       </select>
       </div>
 
-  <button type="button" class="btn" onclick="return Validate()" > <b>Next</b></button>
+  <div class="input-container">
+    <i class="fa fa-phone icon"></i>
+    <input type="file" name="filename" ></div>
+
+    <input type="submit" name="Save Edits" value="Save Edits" class = "btn btn-warning">
 </fieldset>
 </form>
-
-    <script>
-        function Validate() {
-            var password = document.getElementById("password").value;
-            var confirmPassword = document.getElementById("ConfirmPassword").value;
-            if (password != confirmPassword) {
-                alert("Passwords do not match, Recheck your password.");
-                return false;
-            }
-            return true;
-        }
-
-        var inputQuantity = [];
-        $(function() {     
-        $(".number").on("keyup", function (e) {
-        var $field = $(this),
-            val=this.value,
-            $thisIndex=parseInt($field.data("idx"),10); 
-        if (this.validity && this.validity.badInput || isNaN(val) || $field.is(":invalid") ) {
-            this.value = inputQuantity[$thisIndex];
-            return;
-        } 
-        if (val.length > Number($field.attr("maxlength"))) {
-          val=val.slice(0, 11);
-          $field.val(val);
-        }
-        inputQuantity[$thisIndex]=val;
-      });      
-    });
-
-
-
-   </script>
- 
+</div>
+</div>
+<footer>
+        @include('layouts.footer')
+</footer>
+    @endsection
 </body>
 </html>
