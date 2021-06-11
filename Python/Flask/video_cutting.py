@@ -3,7 +3,7 @@ import cv2
 import threading
 import mysql.connector
 
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify
 from flask_restful import Resource, Api
 from flask import Flask
 
@@ -31,7 +31,7 @@ class VideoCutting (Resource):
 
     def cut(self, video_name, userid):
         vidcap = cv2.VideoCapture(os.path.join(PATH, video_name))
-        vidcap.set(cv2.CV_CAP_PROP_POS_FRAMES, frame_number-1)
+        vidcap.set(cv2.CV_CAP_PROP_POS_FRAMES)
         success, image = vidcap.read()
         count = 0
         userid = int(userid)

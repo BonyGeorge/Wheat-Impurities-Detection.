@@ -65,6 +65,11 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'ProfilePicture' => [
+            'driver' => 'local',
+            'root' => storage_path('ProfilePicture'),
+        ],
+
     ],
 
     /*
