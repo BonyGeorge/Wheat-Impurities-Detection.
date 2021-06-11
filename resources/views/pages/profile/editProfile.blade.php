@@ -77,7 +77,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
           <img src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" style="width:100%" alt="Avatar">
         @else
 
-        <img src="{{asset('storage/ProfilePicture/'.Auth::user()->filename)}}"  alt="User Image" / width="70cm" height="70cm">
+        <img src="{{asset('storage/uploads/ProfilePicture/'.Auth::user()->filename)}}"  alt="User Image" / width="70cm" height="70cm">
 
         @endif
 
@@ -114,14 +114,14 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 
    <h6 class="w3-text-yellow"> <i class="fa fa-upload icon"></i>
     <input type="file" name="filename" style="  width: 60%; margin:10px; "></div>
+    <button type="submit" name="Save_Edits"  class = "btn btn-warning">Save Edits</button>
   
         
       </div><br> 
   
-     <input type="submit" name="Save Edits" value="Save Edits" class = "btn btn-warning">
     </div>
     
-  
+  </form>
   </div>
   
  

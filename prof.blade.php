@@ -96,7 +96,7 @@ background-image: url({{asset('wheat.jpg')}})">
 
     @else
     
-    <img src="{{URL::asset('storage/ProfilePicture/' .Auth::user()->filename)}}"  alt="Image">
+    <img src="{{URL::asset('storage/uploads/ProfilePicture/' .Auth::user()->filename)}}"  alt="Image">
     @endif
     </div> 
 
