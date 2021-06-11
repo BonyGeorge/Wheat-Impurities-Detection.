@@ -9,6 +9,7 @@ from PIL import Image
 from tensorflow.keras.layers import *
 from torchvision import transforms
 
+classes = ('Healthy Wheat', 'Leaf Rust', 'Stem Rust', 'Wild Oat')
 
 class ResidualBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1, kernel_size=3, padding=1, bias=False):
@@ -126,5 +127,6 @@ x = transform(img)  # Preprocess image
 x = x.unsqueeze(0)  # Add batch dimension
 
 output = model(x)  # Forward pass
-pred = torch.argmax(output, 1)  # Get predicted class if multi-class classification
+pred = torch.max(output, 1)  # Get predicted class if multi-class classification
+pred = torch.tensor(pred)
 print('Image predicted as ', pred)
