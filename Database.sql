@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2021 at 08:35 PM
+-- Generation Time: Jun 10, 2021 at 08:28 PM
 -- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.10
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -148,7 +148,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`, `user_id`) VALUES
 (17, '2020_12_20_231627_add_user_id_to_failed_table', 8, 1),
 (18, '2020_12_20_233745_add_replied_by_table', 9, 1),
 (19, '2021_05_30_181001_create_video_table', 10, 1),
-(20, '2021_05_30_182515_create_videos_table', 11, 1);
+(20, '2021_05_30_182515_create_videos_table', 11, 1),
+(21, '2021_06_08_134352___create_weather_table', 12, 1),
+(23, '2021_06_10_192343_create_notifications_table', 13, 1);
 
 -- --------------------------------------------------------
 
@@ -157,13 +159,28 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`, `user_id`) VALUES
 --
 
 CREATE TABLE `notifications` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_id` bigint(20) UNSIGNED NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `land_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('1ac5590a-5a64-48ee-a4a6-0a650b1c3862', 'App\\Notifications\\TaskComplete', 'App\\User', 10, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:12:01', '2021-06-10 18:12:01'),
+('2f276e75-a62b-4ec4-88da-18a6faad2700', 'App\\Notifications\\TaskComplete', 'App\\User', 10, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:14:00', '2021-06-10 18:14:00'),
+('8882e5dc-f8f2-4d82-9e53-8cc54b7c7a44', 'App\\Notifications\\TaskComplete', 'App\\User', 3, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:25:01', '2021-06-10 18:25:01'),
+('b0a8dcb1-cbf6-414f-927a-d104c2b6a85d', 'App\\Notifications\\TaskComplete', 'App\\User', 2, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:23:03', '2021-06-10 18:23:03'),
+('df1cac34-b4d0-43a7-8a0b-ef48b5d3d49e', 'App\\Notifications\\TaskComplete', 'App\\User', 10, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:13:00', '2021-06-10 18:13:00'),
+('f1972e8b-d170-4aea-a00d-f84c0f113ef1', 'App\\Notifications\\TaskComplete', 'App\\User', 1, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:10:01', '2021-06-10 18:10:01'),
+('f9fa7daf-0ab6-43dc-a25a-2f2b6fc457ef', 'App\\Notifications\\TaskComplete', 'App\\User', 10, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:11:01', '2021-06-10 18:11:01');
 
 -- --------------------------------------------------------
 
@@ -187,20 +204,6 @@ CREATE TABLE `password_resets` (
 CREATE TABLE `reports` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sensors`
---
-
-CREATE TABLE `sensors` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `land_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -232,7 +235,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `isMale`, `address`, `mobile`, `remember_token`, `created_at`, `updated_at`, `type_id`, `accepted`) VALUES
-(1, 'Abanoub', 'abanoub@mail.com', NULL, '$2y$10$dbX6HZTD3zJKiEYAlx9SzeVAZF2CjBinG0gw3gljcOy6F1bNVR5h2', 1, NULL, NULL, 't8R6S8nre5Jm31jkbZXjRnkB3NXRDkH1AyvOEW6cASRgFZb9x2sNbMCkdZDZ', '2020-12-16 11:08:08', '2020-12-16 11:08:08', 1, 0),
+(1, 'Abanoub', 'abanoub@mail.com', NULL, '$2y$10$dbX6HZTD3zJKiEYAlx9SzeVAZF2CjBinG0gw3gljcOy6F1bNVR5h2', 1, NULL, NULL, 'c9fnBzSt734G33YmhFQ1V1TBOHEZqJKvFRWbm7ArKivL6Cuwcb973xqbDEvJ', '2020-12-16 11:08:08', '2020-12-16 11:08:08', 1, 0),
 (2, 'ayhaga', 'dlangworth@example.com', NULL, '$2y$10$bePwIEVCH.eRaREPFMjHHOOO8sD5aGeydEuIhSdIhCdbnVtnVUnly', 1, NULL, NULL, NULL, '2020-12-18 14:16:26', '2020-12-18 14:16:26', 2, 0),
 (3, 'ahmed', 'ahmed@ahmed.com', NULL, '$2y$10$hdHwvVBmVfG0Hwei0JiNhOlS69inpNOHKKdt3lZ7qOj/gvBAe9T7m', 1, NULL, NULL, NULL, '2020-12-18 14:20:14', '2020-12-18 14:20:14', 2, 0),
 (4, 'test', 'ceo@ceo.com', NULL, '$2y$10$rZPbkSA.QH/GLGABfsBEDOW2Zi6xVK6Vo7P60znqIgTd2nOhT8V66', 1, NULL, NULL, NULL, '2020-12-18 14:21:34', '2020-12-18 14:21:34', 2, 0),
@@ -241,7 +244,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `is
 (7, 'test', 'abanoub-g-lamie@hotmail.com', NULL, '$2y$10$5cWW5RS.z7Wx3tuapl5Ed.6n6ERU.SmSlPe9iEbtzVLTsvifcuWEC', 1, NULL, NULL, NULL, '2020-12-18 14:27:35', '2020-12-18 14:27:35', 2, 0),
 (8, 'ayhaga', 'ay@haga.com', NULL, '$2y$10$h9zQl5EyX6oK6kzrvO0nFuS5Ct0AohuRzyEUwZ7aJfn63EFTY.oCy', 1, NULL, NULL, NULL, '2020-12-18 14:28:11', '2020-12-18 14:28:11', 2, 0),
 (9, 'ibrahim', 'ibrahim@mail.com', NULL, '$2y$10$Vi09263qnV4bbB2h27tbuuEX11EJ28cJdQiSCkvVFc78muT8nds7O', 1, NULL, NULL, NULL, '2020-12-18 14:32:39', '2020-12-18 14:32:39', 2, 0),
-(10, 'nour', 'nour@mail.com', NULL, '$2y$10$QmA7fvu/K7Tztl.HQhyAf.pDUF5FbmF.NloK71jbu7EEdNKZUpEI2', 1, NULL, NULL, NULL, '2020-12-18 14:33:50', '2020-12-18 14:33:50', 2, 0);
+(10, 'nour', 'nour@mail.com', NULL, '$2y$10$QmA7fvu/K7Tztl.HQhyAf.pDUF5FbmF.NloK71jbu7EEdNKZUpEI2', 1, NULL, NULL, NULL, '2020-12-18 14:33:50', '2020-12-18 14:33:50', 2, 0),
+(11, 'fawzy', 'fawzyibra@gmail.com', NULL, '$2y$10$oS02P6lp8qp6e0teuZVMPO.t6MOCYlODMkogDAsMPMGcbsg7oDOaS', 1, NULL, NULL, NULL, '2021-06-05 07:41:39', '2021-06-05 07:41:39', 2, 0),
+(12, '7amada', '7amadaa@gmail.com', NULL, '$2y$10$iIl7N66jQkhd4QpOqCnZpuhi3kD4D8pD6AEihwnNOJ.arNTw3rvRW', 1, NULL, NULL, NULL, '2021-06-08 09:43:01', '2021-06-08 09:43:01', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -278,6 +283,31 @@ CREATE TABLE `videos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `weather`
+--
+
+CREATE TABLE `weather` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `temprature` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `humidity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `wind_speed` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `wind_direction` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `weather`
+--
+
+INSERT INTO `weather` (`id`, `temprature`, `humidity`, `wind_speed`, `wind_direction`, `created_at`, `updated_at`) VALUES
+(1, '30.42', '48', '7.2', '350', '2021-06-10 18:23:03', '2021-06-10 18:23:03'),
+(2, '30.42', '48', '7.2', '350', '2021-06-10 18:24:01', '2021-06-10 18:24:01'),
+(3, '30.42', '48', '7.2', '350', '2021-06-10 18:25:01', '2021-06-10 18:25:01');
 
 --
 -- Indexes for dumped tables
@@ -338,8 +368,7 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `notifications`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `notifications_land_id_foreign` (`land_id`),
-  ADD KEY `notifications_user_id_foreign` (`user_id`);
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
 
 --
 -- Indexes for table `password_resets`
@@ -354,13 +383,6 @@ ALTER TABLE `password_resets`
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`),
   ADD KEY `reports_user_id_foreign` (`user_id`);
-
---
--- Indexes for table `sensors`
---
-ALTER TABLE `sensors`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `sensors_land_id_foreign` (`land_id`);
 
 --
 -- Indexes for table `users`
@@ -382,6 +404,12 @@ ALTER TABLE `user_types`
 ALTER TABLE `videos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `videos_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `weather`
+--
+ALTER TABLE `weather`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -421,19 +449,13 @@ ALTER TABLE `lands`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT for table `notifications`
---
-ALTER TABLE `notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `reports`
@@ -442,16 +464,10 @@ ALTER TABLE `reports`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `sensors`
---
-ALTER TABLE `sensors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_types`
@@ -464,6 +480,12 @@ ALTER TABLE `user_types`
 --
 ALTER TABLE `videos`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `weather`
+--
+ALTER TABLE `weather`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
