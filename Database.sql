@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2021 at 05:22 PM
+-- Generation Time: Jun 11, 2021 at 11:14 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -45,12 +45,10 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `frames` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` int(11) NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `path` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -64,19 +62,6 @@ CREATE TABLE `images` (
   `width` double(8,2) NOT NULL,
   `path` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `land_id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `lands`
---
-
-CREATE TABLE `lands` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -161,13 +146,9 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
-('1ac5590a-5a64-48ee-a4a6-0a650b1c3862', 'App\\Notifications\\TaskComplete', 'App\\User', 10, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:12:01', '2021-06-10 18:12:01'),
-('2f276e75-a62b-4ec4-88da-18a6faad2700', 'App\\Notifications\\TaskComplete', 'App\\User', 10, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:14:00', '2021-06-10 18:14:00'),
-('8882e5dc-f8f2-4d82-9e53-8cc54b7c7a44', 'App\\Notifications\\TaskComplete', 'App\\User', 3, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:25:01', '2021-06-10 18:25:01'),
-('b0a8dcb1-cbf6-414f-927a-d104c2b6a85d', 'App\\Notifications\\TaskComplete', 'App\\User', 2, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:23:03', '2021-06-10 18:23:03'),
-('df1cac34-b4d0-43a7-8a0b-ef48b5d3d49e', 'App\\Notifications\\TaskComplete', 'App\\User', 10, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:13:00', '2021-06-10 18:13:00'),
-('f1972e8b-d170-4aea-a00d-f84c0f113ef1', 'App\\Notifications\\TaskComplete', 'App\\User', 1, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:10:01', '2021-06-10 18:10:01'),
-('f9fa7daf-0ab6-43dc-a25a-2f2b6fc457ef', 'App\\Notifications\\TaskComplete', 'App\\User', 10, '{\"data\":\"May wheat rust happens later\"}', NULL, '2021-06-10 18:11:01', '2021-06-10 18:11:01');
+('22f497f5-f38a-4ac6-a472-6c3b48e466ad', 'App\\Notifications\\TaskComplete', 'App\\User', 1, '[\"May wheat rust happens later due to change of weather\"]', NULL, '2021-06-11 19:58:01', '2021-06-11 19:58:01'),
+('4fe2a02c-7b76-4b63-8dbc-d4faea4e2828', 'App\\Notifications\\TaskComplete', 'App\\User', 1, '[\"May wheat rust happens later due to change of weather\"]', NULL, '2021-06-11 19:57:01', '2021-06-11 19:57:01'),
+('79e6e912-eb11-4e78-9883-f7d00b6923e8', 'App\\Notifications\\TaskComplete', 'App\\User', 1, '[\"May wheat rust happens later due to change of weather\"]', NULL, '2021-06-11 19:56:01', '2021-06-11 19:56:01');
 
 -- --------------------------------------------------------
 
@@ -210,7 +191,7 @@ CREATE TABLE `users` (
   `isMale` tinyint(1) NOT NULL DEFAULT 1,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `filename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `filename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -272,6 +253,15 @@ CREATE TABLE `videos` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `videos`
+--
+
+INSERT INTO `videos` (`id`, `name`, `video_path`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, '10_test.mp4', '/storage/uploads/10_test.mp4', 10, '2021-06-11 21:05:47', '2021-06-11 21:05:47'),
+(2, '10_test.mp4', '/storage/uploads/10_test.mp4', 10, '2021-06-11 21:07:20', '2021-06-11 21:07:20'),
+(3, '10_test.mp4', '/storage/uploads/10_test.mp4', 10, '2021-06-11 21:09:09', '2021-06-11 21:09:09');
+
 -- --------------------------------------------------------
 
 --
@@ -295,7 +285,11 @@ CREATE TABLE `weather` (
 INSERT INTO `weather` (`id`, `temprature`, `humidity`, `wind_speed`, `wind_direction`, `created_at`, `updated_at`) VALUES
 (1, '30.42', '48', '7.2', '350', '2021-06-10 18:23:03', '2021-06-10 18:23:03'),
 (2, '30.42', '48', '7.2', '350', '2021-06-10 18:24:01', '2021-06-10 18:24:01'),
-(3, '30.42', '48', '7.2', '350', '2021-06-10 18:25:01', '2021-06-10 18:25:01');
+(3, '30.42', '48', '7.2', '350', '2021-06-10 18:25:01', '2021-06-10 18:25:01'),
+(4, '28.73', '26', '7.72', '40', '2021-06-11 19:55:02', '2021-06-11 19:55:02'),
+(5, '28.73', '26', '7.72', '40', '2021-06-11 19:56:01', '2021-06-11 19:56:01'),
+(6, '28.73', '26', '7.72', '40', '2021-06-11 19:57:01', '2021-06-11 19:57:01'),
+(7, '28.73', '26', '7.72', '40', '2021-06-11 19:58:01', '2021-06-11 19:58:01');
 
 --
 -- Indexes for dumped tables
@@ -321,13 +315,6 @@ ALTER TABLE `frames`
 ALTER TABLE `images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `images_land_id_foreign` (`land_id`);
-
---
--- Indexes for table `lands`
---
-ALTER TABLE `lands`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `lands_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `messages`
@@ -405,18 +392,12 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `frames`
 --
 ALTER TABLE `frames`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `lands`
---
-ALTER TABLE `lands`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -453,13 +434,13 @@ ALTER TABLE `user_types`
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `weather`
 --
 ALTER TABLE `weather`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -475,8 +456,7 @@ ALTER TABLE `failed_jobs`
 -- Constraints for table `frames`
 --
 ALTER TABLE `frames`
-  ADD CONSTRAINT `frames_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `frames_land_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `lands` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `frames_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `images`

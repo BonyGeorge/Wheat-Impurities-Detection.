@@ -2,7 +2,8 @@ import os
 import cv2
 import threading
 import mysql.connector
-
+import matplotlib.pyplot as plt
+import numpy as np
 from flask import Flask, jsonify
 from flask_restful import Resource, Api
 from flask import Flask
@@ -17,8 +18,9 @@ mydb = mysql.connector.connect(
         database="wheat_system"
     )
 mycursor = mydb.cursor()
-PATH = "G:/D/Wheat-Impurities-Detection/storage/app/public/uploads"
+PATH = "G:/D/Wheat-Impurities-Detection/Wheat-Impurities-Detection/storage/app/public/uploads"
 SAVE_PATH = "/storage/app/public/uploads"
+
 
 class VideoCutting (Resource):
     def get(self, video_name, userid):
@@ -31,7 +33,6 @@ class VideoCutting (Resource):
 
     def cut(self, video_name, userid):
         vidcap = cv2.VideoCapture(os.path.join(PATH, video_name))
-        vidcap.set(cv2.CV_CAP_PROP_POS_FRAMES)
         success, image = vidcap.read()
         count = 0
         userid = int(userid)
