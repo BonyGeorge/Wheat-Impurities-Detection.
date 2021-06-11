@@ -37,7 +37,10 @@
   cursor: pointer;
   margin: 5px;
   margin-left: 400px;
+ position: center;
+
 }
+
 
 .button span {
   cursor: pointer;
@@ -63,6 +66,48 @@
   opacity: 1;
   right: 0;
 }
+.cbutton{
+  display: inline-block;
+  border-radius: 40px;
+  background-color:goldenrod;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 10px;
+  width: 150px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  margin-left: 450px;
+  margin-top: -40px;
+}
+.cbutton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.cbutton span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.cbutton:hover span {
+  padding-right: 25px;
+}
+
+.cbutton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
 </style>
 
 </head>
@@ -72,6 +117,7 @@
     <div class="container mt-5">
         <form action="{{URL('/upload')}}" method="post" enctype="multipart/form-data">
           <h3 class="text-center mb-5">Upload Video For Classification.</h3>
+          <h6 class="text-center mb-5"> Our program will classify the healthy wheat derived from wild oats and wheat infected with rust. </h6>
             @csrf
             @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -93,12 +139,33 @@
                 <input type="file" name="file" class="custom-file-input" id="chooseFile">
                 <label class="custom-file-label" for="chooseFile">Select Video</label>
             </div>
-
+            <br>
+            <br>
+            <br>
             <button class="button" type="submit" name="submit"  class="btn btn-primary btn-block mt-4" >
                 Upload Videos
             </button>
         </form>
+        
     </div>
+
+    <div class="container">
+      <br>
+      
+  <h2 class="text-center mb-5">For more info about our system</h2>
+  <button type="button" class="cbutton" data-toggle="collapse" data-target="#demo">Click here</button>
+  <div id="demo" class="collapse">
+ <p class="text-center mb-5"> Our system is meant to help you distinguish between healthy wheat, wild oats, and wheat affected with rust.<br>
+  It's simple; all you have to do is upload a video of the place you want to inspect, and our program will identify it for you. </p> 
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 </body>
 </html>

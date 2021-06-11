@@ -64,15 +64,45 @@
     }
 
     .mbutton {
-        width: 0%;
-        background-color: white;
-        display: inline-flex;
-        display: table;
-        text-align: center;
-        align: center;
-        position: relative;
-        left: 43%
+        display: inline-block;
+  border-radius: 40px;
+  background-color:goldenrod;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+  width: 150px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  margin-left: 450px;
     }
+
+.mbutton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.mbutton span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.mbutton:hover span {
+  padding-right: 25px;
+}
+
+.mbutton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
     .mailer {
         position: relative;
         left: 44.2%
@@ -146,8 +176,8 @@
               {!! Form::textarea('mailcontent', null ,['rows' => '8', 'cols' => '50', 'id' => 'mcontent']) !!}
         </div>
         <br><br>
-        <div class='mbutton'>
-            {!! Form::submit('Send To User', ['class' =>'btn btn-warning btn-rounded',  'value' => 'send1', 'name' => 'action', 'id' => 'send1', 'data-target' => '#centralModalSuccess', 'data-toggle' => 'modal']) !!}  
+        <div>
+            {!! Form::submit('Send To User', ['class' =>'mbutton',  'value' => 'send1', 'name' => 'action', 'id' => 'send1', 'data-target' => '#centralModalSuccess', 'data-toggle' => 'modal']) !!}  
         </div>
     {!! Form::close() !!}
 </body>

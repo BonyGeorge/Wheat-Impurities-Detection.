@@ -61,6 +61,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   margin-bottom: 100px;
   
 }
+
 </style>
 
 <body class="w3-light-grey">
@@ -80,10 +81,12 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
           <img src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" style="width:100%" alt="Avatar">
         @else
 
-        <img src="{{asset('storage/ProfilePicture/'.Auth::user()->filename)}}"  alt="User Image" / width="70cm" height="70cm">
+        <img src="{{asset('storage/uploads/ProfilePicture/'.Auth::user()->filename)}}"  alt="User Image" / width="70cm" height="70cm">
 
         @endif
 
+<br><br>
+<br><br>
           <div class="w3-display-bottomleft w3-container w3-text-black">
             <h2> {{Auth::user()->name}}</h2>
           </div>

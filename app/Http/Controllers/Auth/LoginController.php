@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo =  '/dashboard';
+    protected $redirectTo =  '/weather_getData';
 
     /**
      * Create a new controller instance.
