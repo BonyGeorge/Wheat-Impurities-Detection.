@@ -78,8 +78,7 @@ img{
 
 
 </head>
-<body style="
-background-image: url({{asset('w.jpeg')}})">
+<body >
 
 <form action="/action_page.php" style="max-width:500px;margin:auto" >
     <fieldset>
