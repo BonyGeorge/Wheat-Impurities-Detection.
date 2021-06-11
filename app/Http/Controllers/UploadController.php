@@ -19,7 +19,7 @@ class UploadController extends Controller
     {
        /* $video_name = str_replace('/', '-', $video_name);
         print($video_name);*/
-        $response = Http::get("http://192.168.0.101:8001/VideoCutting/$video_name/$userid");
+        $response = Http::get("http://192.168.0.102:8001/VideoCutting/$video_name/$userid");
     
         if ($response->status() == 200) {
             return "Video Sent Successful.";
