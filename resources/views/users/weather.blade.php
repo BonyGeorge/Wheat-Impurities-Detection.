@@ -16,7 +16,7 @@
     
     <!-- Editable table -->
     <div class="carda">
-        <h3 class="card-header text-center font-weight-bold">Weather Readings.</h3>
+        <h3 class="card-header text-center font-weight-bold"> Weather Readings </h3>
         <br><br><br><br><br><br>
         <div class="card-body">
     
