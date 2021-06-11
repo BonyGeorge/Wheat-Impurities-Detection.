@@ -78,11 +78,6 @@ img{
 
 
 </head>
-<<<<<<< HEAD
-<body >
-
-<form action="/action_page.php" style="max-width:500px;margin:auto" >
-=======
 <body style="
 background-image: url({{asset('wheat.jpg')}})">
     @extends('layouts.sidebar')
@@ -92,7 +87,6 @@ background-image: url({{asset('wheat.jpg')}})">
 <form method="POST" action="/profile/{{Auth::user()->id}}" enctype="multipart/form-data" style="max-width:500px;margin:auto" >
     @csrf
     @method('PATCH')
->>>>>>> f33f1eb533edccf68918717a3cfe2ce6711bf83a
     <fieldset>
         <legend>Profile Page</legend>
 
@@ -118,7 +112,7 @@ background-image: url({{asset('wheat.jpg')}})">
   </div>
 
   <div class="input-container">
-    <i class="fa fa-envelope icon"></i>
+    <i class="fas fa-home icon"></i>
     <input class="input-field" type="email" name="address" value="{{Auth::user()->address}}" id="email">
   </div>
 
@@ -138,7 +132,7 @@ background-image: url({{asset('wheat.jpg')}})">
       </div>
 
   <div class="input-container">
-    <i class="fa fa-phone icon"></i>
+    <i class="fa fa-upload icon"></i>
     <input type="file" name="filename" ></div>
 
     <input type="submit" name="Save Edits" value="Save Edits" class = "btn btn-warning">
