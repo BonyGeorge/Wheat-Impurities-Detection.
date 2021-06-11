@@ -74,12 +74,12 @@
   color: #FFFFFF;
   text-align: center;
   font-size: 20px;
-  padding: 10px;
-  width: 150px;
+  padding: 20px;
+  width: 200px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
-  margin-left: 450px;
+  margin-left: 400px;
   margin-top: -40px;
 }
 .cbutton span {
