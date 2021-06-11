@@ -100,7 +100,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     <input class="input-field" type="email" name="email" value="{{Auth::user()->email}}" id="email"style="  width: 60%; margin:10px; ">
 
     <h6 class="w3-text-yellow"> <i class="fas fa-home icon"></i>
-    <input class="input-field" type="email" name="address" value="{{Auth::user()->address}}" id="email"style="  width: 60%; margin:10px; ">
+    <input class="input-field" type="text" name="address" value="{{Auth::user()->address}}" id="email"style="  width: 60%; margin:10px; ">
    <br>
     <h6 class="w3-text-yellow"><i class="fa fa-phone icon"></i>
     <input class= "number"  name="phone" value="{{Auth::user()->phone}}" id="zipcode-number"  style="  width: 60%; margin:10px; ">
