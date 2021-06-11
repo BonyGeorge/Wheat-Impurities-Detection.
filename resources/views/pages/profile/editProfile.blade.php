@@ -110,7 +110,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 
   
   
-      <input type="submit" name="Save Edits" value="Save Edits" class = "button" style="vertical-align:center ; margin-left:60px;">
+      <input type="submit" name="Save Edits" value="Save Edits" class = "button" style="vertical-align:center ; margin-left:20px;">
     
     </div>
     
