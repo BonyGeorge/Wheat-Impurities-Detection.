@@ -81,37 +81,44 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 
         @endif
 
+      <form method="POST" action="/profile/{{Auth::user()->id}}" enctype="multipart/form-data" style="max-width:500px;margin:auto" >
+    @csrf
+    @method('PATCH')
+
           <div class="w3-display-bottomleft w3-container w3-text-black">
             <h2> {{Auth::user()->name}}</h2>
           </div>
         </div>
         <br>
         <div class="w3-container ">
-        <h6 class="w3-text-yellow"><i class="fa fa-envelope icon "></i>
+
+    <h6 class="w3-text-yellow"><i class="fa fa-user icon"></i>
+    <input class="input-field" type="text" name="name" value="{{Auth::user()->name}}" id="email"style="  width: 60%; margin:10px; ">
+    
+    <br>
+    <h6 class="w3-text-yellow"><i class="fa fa-envelope icon "></i>
     <input class="input-field" type="email" name="email" value="{{Auth::user()->email}}" id="email"style="  width: 60%; margin:10px; ">
+
     <h6 class="w3-text-yellow"> <i class="fas fa-home icon"></i>
     <input class="input-field" type="email" name="address" value="{{Auth::user()->address}}" id="email"style="  width: 60%; margin:10px; ">
-   <br> <h6 class="w3-text-yellow"><i class="fa fa-phone icon"></i>
+   <br>
+    <h6 class="w3-text-yellow"><i class="fa fa-phone icon"></i>
     <input class= "number"  name="phone" value="{{Auth::user()->phone}}" id="zipcode-number"  style="  width: 60%; margin:10px; ">
    <br>
-   <h6 class="w3-text-yellow"> <i class="fa fa-upload icon"></i>
-    <input type="file" name="filename" style="  width: 60%; margin:10px; "></div>
-  
-   
-    <h6 class="w3-text-yellow"><i class ="fa fa-transgender icon" ></i>
-      <select name="isMale" id="gen"  style="  width: 40%; margin:10px; margin: right 100px;">
+
+   <h6 class="w3-text-yellow"><i class ="fas fa-transgender icon"></i>
+      <select name="isMale" id="gen"   class="input-field" style="width: 60%; margin-left:4% ; margin-right:3%;height: 25px; ">
         <option value="1">Male</option>
         <option value="0">Female</option>      
       </select>
-       
-       
-      </div><br> 
-    
 
+   <h6 class="w3-text-yellow"> <i class="fa fa-upload icon"></i>
+    <input type="file" name="filename" style="  width: 60%; margin:10px; "></div>
   
+        
+      </div><br> 
   
-      <input type="submit" name="Save Edits" value="Save Edits" class = "button" style="vertical-align:center ; margin-left:20px;">
-    
+     <input type="submit" name="Save Edits" value="Save Edits" class = "btn btn-warning">
     </div>
     
   
