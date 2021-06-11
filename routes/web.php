@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\pages;
 use App\User;
+use App\Weather;
 use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +28,8 @@ Route::get('/', function ()
         }
         else if (Auth::user()->type_id == 2)
         { 
-            
-            return view('pages.dashboard.dashboard');
+            $WeatherInfo = Weather::all();
+            return view('users.weather', compact('WeatherInfo'));
         }
     }
     else

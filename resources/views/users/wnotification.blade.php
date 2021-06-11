@@ -52,5 +52,8 @@
       </div>
      </div>
     </div>
- 
-    @endsection
+  <!-- Editable table -->
+  <footer id="footer" style="position: relative;margin-top:-30px;clear:both;height:100px">
+    @include('layouts.footer')
+</footer>
+@endsection

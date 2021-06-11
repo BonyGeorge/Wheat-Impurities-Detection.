@@ -2,8 +2,16 @@
     @extends('layouts.sidebar')
     
     @section('content')
-        <title>Weather.</title>
+        <title>Wheat System | Weather Data.</title>
         <link rel="icon" href=" 3.png">
+        <style>
+        span {
+        content: "\00B0";
+        }
+        .humid {
+          content: "\00B0";
+        }
+        </style>
     </head>
     
     <!-- Editable table -->
@@ -50,10 +58,10 @@
                     $i++;
                   @endphp
                 <td class="pt-3-half">{{$WeatherData->created_at}}</td>
-                <td class="pt-3-half">{{$WeatherData->temprature}}</td>
-                <td class="pt-3-half">{{$WeatherData->humidity}}</td>
-                <td class="pt-3-half">{{$WeatherData->wind_speed}}</td>
-                <td class="pt-3-half">{{$WeatherData->wind_direction}}</td>
+                <td class="pt-3-half">{{$WeatherData->temprature}} <span>&#x2103;</span></td>
+                <td class="pt-3-half">{{$WeatherData->humidity}} <span>%rh</span></td>
+                <td class="pt-3-half">{{$WeatherData->wind_speed}} <span>(m/s)</span></td>
+                <td class="pt-3-half" id="humid">{{$WeatherData->wind_direction}} <span>&#176;</span></td>
                   @empty
           <td colspan="9"><center><-   No Weather data to show   -></center> </td>
       </tr>
@@ -67,5 +75,8 @@
       </div>
      </div>
     </div>
- 
-    @endsection
+  <!-- Editable table -->
+  <footer id="footer" style="position: relative;margin-top:-30px;clear:both;height:100px">
+    @include('layouts.footer')
+</footer>
+@endsection

@@ -42,12 +42,12 @@
           </a>
           </li>
 
-          <li class="sidebar">
+          <!--<li class="sidebar">
           <a href="{{ url('/dashboard') }}">
             <i class="fa fa-chart-line"></i>
             <span>Dashboard</span>
           </a>
-          </li>
+          </li>-->
 
           <li class="sidebar">
           <a href="{{ url('/sendmail') }}">
