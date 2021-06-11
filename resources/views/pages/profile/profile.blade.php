@@ -54,22 +54,15 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   opacity: 1;
   right: 0;
 }
-.w3-content{
-  height: 600px;
-  max-width: 1100px;
-  margin-block-end: 300px;
-  margin-bottom: 100px;
-  
-}
 </style>
 
 <body class="w3-light-grey">
 
 <!-- Page Container -->
-<div class="w3-content w3-margin-top" >
+<div class="w3-content w3-margin-top" style="max-width:1100px;">
 
   <!-- The Grid -->
-  <div class="w3-row-padding style">
+  <div class="w3-row-padding">
   
     <!-- Left Column -->
     <div class="w3-third">
@@ -90,7 +83,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
         </div>
         <br>
         <div class="w3-container">
-         <!-- <p><i class="fa fa-id-card fa-fw w3-margin-right w3-large w3-text-yellow"></i> {{Auth::user()->ssn}}</p>-->
+          <p><i class="fa fa-id-card fa-fw w3-margin-right w3-large w3-text-yellow"></i> {{Auth::user()->ssn}}</p>
           <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-yellow"></i> {{Auth::user()->address}}</p>
           <p><i class="fa fa-mars fa-fw w3-margin-right w3-large w3-text-yellow"></i>
                         @php
@@ -104,11 +97,11 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
                          }
                       @endphp</p>
 
-         <!--<p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-large w3-text-yellow"></i>{{Auth::user()->birthday}}</p>-->
+          <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-large w3-text-yellow"></i>{{Auth::user()->birthday}}</p>
           <hr>
           <br>
         </div>
-      </div>
+      </div><br>
 
     <!-- End Left Column -->
     </div>
@@ -130,22 +123,19 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
         </div>
        
       </div>
-      <br>
-      <br>
-      <br>
       <a type = "button" class="button" href="/profile/{{Auth::user()->id}}/edit" type="submit" style="vertical-align:middle"><span>Edit Profile </span></a>
     <!-- End Right Column -->
     </div>
     
   <!-- End Grid -->
   </div>
-  <br>
-  <br>
-  <br>
-  <br>
+  
   <!-- End Page Container -->
 </div>
 
+<footer id="footer">
+  @include('layouts.footer')
+</footer>
 
 </body>
 </html>
@@ -157,8 +147,3 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{{asset('js/mdb.min.js')}}"></script>
-
-  <footer id="footer">
-  @include('layouts.footer')
-</footer>
-@endsection
