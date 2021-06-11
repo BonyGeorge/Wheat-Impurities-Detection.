@@ -92,50 +92,19 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     <h6 class="w3-text-yellow"> <i class="fas fa-home icon"></i>
     <input class="input-field" type="email" name="address" value="{{Auth::user()->address}}" id="email"style="  width: 60%; margin:10px; ">
    <br> <h6 class="w3-text-yellow"><i class="fa fa-phone icon"></i>
-    <input class= "number" type="number" name="phone" value="{{Auth::user()->phone}}" id="zipcode-number" maxlength="11" min="0" max="99999999999" style="  width: 60%; margin:10px; ">
+    <input class= "number"  name="phone" value="{{Auth::user()->phone}}" id="zipcode-number"  style="  width: 60%; margin:10px; ">
    <br>
    <h6 class="w3-text-yellow"> <i class="fa fa-upload icon"></i>
     <input type="file" name="filename" style="  width: 60%; margin:10px; "></div>
-    
-<<<<<<< HEAD
-    <h6 class="w3-text-yellow"><i class ="fa fa-transgender icon"  ></i>
-      <select name="isMale" id="gen" style="  width: 40%; margin:10px; ">
-=======
-    <img src="{{URL::asset('storage/ProfilePicture/' .Auth::user()->filename)}}"  alt="Image">
-    @endif
-    </div> 
-
-  <div class="input-container">
-    <i class="fa fa-user icon"></i>
-    <input class="input-field" type="text" name="name" value="{{Auth::user()->name}}" id="usrnm">
-  </div>
-
-  <div class="input-container">
-    <i class="fa fa-envelope icon"></i>
-    <input class="input-field" type="email" name="email" value="{{Auth::user()->email}}" id="email">
-  </div>
-
-  <div class="input-container">
-    <i class="fa fa-envelope icon"></i>
-    <input class="input-field" type="email" name="address" value="{{Auth::user()->address}}" id="email">
-  </div>
-
-  <div class="input-container">
-    <i class="fa fa-phone icon"></i>
-    <input class= "number"  name="phone" value="{{Auth::user()->mobile}}" id="zipcode-number" style="  width: 100%; padding: 10px;">
-  </div>
-
   
-
-  <div class= "input-container">
-      <i class ="fa icon">&#xf224;</i>
-      <select name="isMale" id="gen" >
->>>>>>> a64e8aea4619d45bbe358067e768db64b38421d1
+   
+    <h6 class="w3-text-yellow"><i class ="fa fa-transgender icon" ></i>
+      <select name="isMale" id="gen"  style="  width: 40%; margin:10px; margin: right 100px;">
         <option value="1">Male</option>
         <option value="0">Female</option>      
       </select>
        
-       </div>
+       
       </div><br> 
     
 
