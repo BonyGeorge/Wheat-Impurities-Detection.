@@ -36,7 +36,7 @@ class TaskComplete extends Notification
     public function toDatabase($notifiable)
     {
         return [
-           'data' => $this->details['body'],
+           $this->details['body'],
         ];
     }
 }
