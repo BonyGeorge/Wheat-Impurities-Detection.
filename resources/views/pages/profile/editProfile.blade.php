@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,7 +96,7 @@ background-image: url({{asset('wheat.jpg')}})">
 
     @else
     
-    <img src="{{asset('storage/ProfilePicture/' .Auth::user()->filename)}}"  alt="Image">
+    <img src="{{URL::asset('storage/ProfilePicture/' .Auth::user()->filename)}}"  alt="Image">
     @endif
     </div> 
 
@@ -118,7 +117,7 @@ background-image: url({{asset('wheat.jpg')}})">
 
   <div class="input-container">
     <i class="fa fa-phone icon"></i>
-    <input class= "number" type="number" name="phone" value="{{Auth::user()->phone}}" id="zipcode-number" maxlength="11" min="0" max="99999999999" style="  width: 100%; padding: 10px;">
+    <input class= "number"  name="phone" value="{{Auth::user()->mobile}}" id="zipcode-number" style="  width: 100%; padding: 10px;">
   </div>
 
   

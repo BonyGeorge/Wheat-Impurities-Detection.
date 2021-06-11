@@ -67,7 +67,7 @@ return [
 
         'ProfilePicture' => [
             'driver' => 'local',
-            'root' => storage_path('ProfilePicture'),
+            'root' => storage_path('app/public/uploads/ProfilePicture'),
         ],
 
     ],

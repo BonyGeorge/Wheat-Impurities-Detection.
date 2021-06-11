@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2021 at 08:28 PM
+-- Generation Time: Jun 11, 2021 at 05:22 PM
 -- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.11
+-- PHP Version: 7.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -46,7 +46,8 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `frames` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `land_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `path` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -63,20 +64,6 @@ CREATE TABLE `images` (
   `width` double(8,2) NOT NULL,
   `path` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `land_id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `images_in_frames`
---
-
-CREATE TABLE `images_in_frames` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `frame_id` bigint(20) UNSIGNED NOT NULL,
-  `image_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -223,6 +210,7 @@ CREATE TABLE `users` (
   `isMale` tinyint(1) NOT NULL DEFAULT 1,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `filename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -234,19 +222,19 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `isMale`, `address`, `mobile`, `remember_token`, `created_at`, `updated_at`, `type_id`, `accepted`) VALUES
-(1, 'Abanoub', 'abanoub@mail.com', NULL, '$2y$10$dbX6HZTD3zJKiEYAlx9SzeVAZF2CjBinG0gw3gljcOy6F1bNVR5h2', 1, NULL, NULL, 'c9fnBzSt734G33YmhFQ1V1TBOHEZqJKvFRWbm7ArKivL6Cuwcb973xqbDEvJ', '2020-12-16 11:08:08', '2020-12-16 11:08:08', 1, 0),
-(2, 'ayhaga', 'dlangworth@example.com', NULL, '$2y$10$bePwIEVCH.eRaREPFMjHHOOO8sD5aGeydEuIhSdIhCdbnVtnVUnly', 1, NULL, NULL, NULL, '2020-12-18 14:16:26', '2020-12-18 14:16:26', 2, 0),
-(3, 'ahmed', 'ahmed@ahmed.com', NULL, '$2y$10$hdHwvVBmVfG0Hwei0JiNhOlS69inpNOHKKdt3lZ7qOj/gvBAe9T7m', 1, NULL, NULL, NULL, '2020-12-18 14:20:14', '2020-12-18 14:20:14', 2, 0),
-(4, 'test', 'ceo@ceo.com', NULL, '$2y$10$rZPbkSA.QH/GLGABfsBEDOW2Zi6xVK6Vo7P60znqIgTd2nOhT8V66', 1, NULL, NULL, NULL, '2020-12-18 14:21:34', '2020-12-18 14:21:34', 2, 0),
-(5, 'test', 'admin@gmail.com', NULL, '$2y$10$wndaD2iauPYZZx6pTwoPD.viPmL/Mn/VtToU9.HMbuC.LVCUH64.W', 1, NULL, NULL, NULL, '2020-12-18 14:24:17', '2020-12-18 14:24:17', 2, 0),
-(6, 'test', 'abanoubLamie16@gmail.com', NULL, '$2y$10$agQ1gReTF/YGFrsgu6dfpeL5dQJBU9yoUja8nPC7d9G/rAK936J0O', 1, NULL, NULL, NULL, '2020-12-18 14:26:18', '2020-12-18 14:26:18', 2, 0),
-(7, 'test', 'abanoub-g-lamie@hotmail.com', NULL, '$2y$10$5cWW5RS.z7Wx3tuapl5Ed.6n6ERU.SmSlPe9iEbtzVLTsvifcuWEC', 1, NULL, NULL, NULL, '2020-12-18 14:27:35', '2020-12-18 14:27:35', 2, 0),
-(8, 'ayhaga', 'ay@haga.com', NULL, '$2y$10$h9zQl5EyX6oK6kzrvO0nFuS5Ct0AohuRzyEUwZ7aJfn63EFTY.oCy', 1, NULL, NULL, NULL, '2020-12-18 14:28:11', '2020-12-18 14:28:11', 2, 0),
-(9, 'ibrahim', 'ibrahim@mail.com', NULL, '$2y$10$Vi09263qnV4bbB2h27tbuuEX11EJ28cJdQiSCkvVFc78muT8nds7O', 1, NULL, NULL, NULL, '2020-12-18 14:32:39', '2020-12-18 14:32:39', 2, 0),
-(10, 'nour', 'nour@mail.com', NULL, '$2y$10$QmA7fvu/K7Tztl.HQhyAf.pDUF5FbmF.NloK71jbu7EEdNKZUpEI2', 1, NULL, NULL, NULL, '2020-12-18 14:33:50', '2020-12-18 14:33:50', 2, 0),
-(11, 'fawzy', 'fawzyibra@gmail.com', NULL, '$2y$10$oS02P6lp8qp6e0teuZVMPO.t6MOCYlODMkogDAsMPMGcbsg7oDOaS', 1, NULL, NULL, NULL, '2021-06-05 07:41:39', '2021-06-05 07:41:39', 2, 0),
-(12, '7amada', '7amadaa@gmail.com', NULL, '$2y$10$iIl7N66jQkhd4QpOqCnZpuhi3kD4D8pD6AEihwnNOJ.arNTw3rvRW', 1, NULL, NULL, NULL, '2021-06-08 09:43:01', '2021-06-08 09:43:01', 2, 0);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `isMale`, `address`, `mobile`, `filename`, `remember_token`, `created_at`, `updated_at`, `type_id`, `accepted`) VALUES
+(1, 'Abanoub Lamie', 'abanoub@mail.com', NULL, '$2y$10$dbX6HZTD3zJKiEYAlx9SzeVAZF2CjBinG0gw3gljcOy6F1bNVR5h2', 1, NULL, '01202820504', 'phpBB94.tmp.jpg', 'c9fnBzSt734G33YmhFQ1V1TBOHEZqJKvFRWbm7ArKivL6Cuwcb973xqbDEvJ', '2020-12-16 11:08:08', '2021-06-11 15:19:55', 1, 0),
+(2, 'ayhaga', 'dlangworth@example.com', NULL, '$2y$10$bePwIEVCH.eRaREPFMjHHOOO8sD5aGeydEuIhSdIhCdbnVtnVUnly', 1, NULL, NULL, '', NULL, '2020-12-18 14:16:26', '2020-12-18 14:16:26', 2, 0),
+(3, 'ahmed', 'ahmed@ahmed.com', NULL, '$2y$10$hdHwvVBmVfG0Hwei0JiNhOlS69inpNOHKKdt3lZ7qOj/gvBAe9T7m', 1, NULL, NULL, '', NULL, '2020-12-18 14:20:14', '2020-12-18 14:20:14', 2, 0),
+(4, 'test', 'ceo@ceo.com', NULL, '$2y$10$rZPbkSA.QH/GLGABfsBEDOW2Zi6xVK6Vo7P60znqIgTd2nOhT8V66', 1, NULL, NULL, '', NULL, '2020-12-18 14:21:34', '2020-12-18 14:21:34', 2, 0),
+(5, 'test', 'admin@gmail.com', NULL, '$2y$10$wndaD2iauPYZZx6pTwoPD.viPmL/Mn/VtToU9.HMbuC.LVCUH64.W', 1, NULL, NULL, '', NULL, '2020-12-18 14:24:17', '2020-12-18 14:24:17', 2, 0),
+(6, 'test', 'abanoubLamie16@gmail.com', NULL, '$2y$10$agQ1gReTF/YGFrsgu6dfpeL5dQJBU9yoUja8nPC7d9G/rAK936J0O', 1, NULL, NULL, '', NULL, '2020-12-18 14:26:18', '2020-12-18 14:26:18', 2, 0),
+(7, 'test', 'abanoub-g-lamie@hotmail.com', NULL, '$2y$10$5cWW5RS.z7Wx3tuapl5Ed.6n6ERU.SmSlPe9iEbtzVLTsvifcuWEC', 1, NULL, NULL, '', NULL, '2020-12-18 14:27:35', '2020-12-18 14:27:35', 2, 0),
+(8, 'ayhaga', 'ay@haga.com', NULL, '$2y$10$h9zQl5EyX6oK6kzrvO0nFuS5Ct0AohuRzyEUwZ7aJfn63EFTY.oCy', 1, NULL, NULL, '', NULL, '2020-12-18 14:28:11', '2020-12-18 14:28:11', 2, 0),
+(9, 'ibrahim', 'ibrahim@mail.com', NULL, '$2y$10$Vi09263qnV4bbB2h27tbuuEX11EJ28cJdQiSCkvVFc78muT8nds7O', 1, NULL, NULL, '', NULL, '2020-12-18 14:32:39', '2020-12-18 14:32:39', 2, 0),
+(10, 'nour', 'nour@mail.com', NULL, '$2y$10$QmA7fvu/K7Tztl.HQhyAf.pDUF5FbmF.NloK71jbu7EEdNKZUpEI2', 1, NULL, '01202820504', 'phpCCB0.tmp.jpeg', NULL, '2020-12-18 14:33:50', '2021-06-11 14:57:04', 2, 0),
+(11, 'fawzy', 'fawzyibra@gmail.com', NULL, '$2y$10$oS02P6lp8qp6e0teuZVMPO.t6MOCYlODMkogDAsMPMGcbsg7oDOaS', 1, NULL, NULL, '', NULL, '2021-06-05 07:41:39', '2021-06-05 07:41:39', 2, 0),
+(12, '7amada', '7amadaa@gmail.com', NULL, '$2y$10$iIl7N66jQkhd4QpOqCnZpuhi3kD4D8pD6AEihwnNOJ.arNTw3rvRW', 1, NULL, NULL, '', NULL, '2021-06-08 09:43:01', '2021-06-08 09:43:01', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -325,7 +313,7 @@ ALTER TABLE `failed_jobs`
 --
 ALTER TABLE `frames`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `frames_land_id_foreign` (`land_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `images`
@@ -333,14 +321,6 @@ ALTER TABLE `frames`
 ALTER TABLE `images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `images_land_id_foreign` (`land_id`);
-
---
--- Indexes for table `images_in_frames`
---
-ALTER TABLE `images_in_frames`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `images_in_frames_frame_id_foreign` (`frame_id`),
-  ADD KEY `images_in_frames_image_id_foreign` (`image_id`);
 
 --
 -- Indexes for table `lands`
@@ -434,12 +414,6 @@ ALTER TABLE `images`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `images_in_frames`
---
-ALTER TABLE `images_in_frames`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `lands`
 --
 ALTER TABLE `lands`
@@ -501,7 +475,8 @@ ALTER TABLE `failed_jobs`
 -- Constraints for table `frames`
 --
 ALTER TABLE `frames`
-  ADD CONSTRAINT `frames_land_id_foreign` FOREIGN KEY (`land_id`) REFERENCES `lands` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `frames_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `frames_land_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `lands` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `images`

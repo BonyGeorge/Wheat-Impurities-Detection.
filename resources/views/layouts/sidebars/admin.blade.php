@@ -15,7 +15,7 @@
         alt="" style="width:100px; height:100px; margin-left:25%">
         @else
 
-        <img class="rounded-circle" src="{{asset('storage/ProfilePicture/' .Auth::user()->filename)}}"
+        <img class="rounded-circle" src="{{asset('storage/uploads/ProfilePicture/'.Auth::user()->filename)}}"
         alt="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" style="width:100px; height:100px; margin-left:20%">
 
 
