@@ -4,7 +4,7 @@
 @section('content')
 
 <html>
-<title> Your Profile </title>
+<title> Wheat System | Your Profile.</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -71,9 +71,9 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
         <div class="w3-display-container">
         @if(Auth::user()->filename == NULL)
           <img src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" style="width:100%" alt="Avatar">
-          @else
+        @else
 
-        <img src="{{asset('storage/ProfilePicture/' .Auth::user()->filename)}}"  alt="Image" / width="70cm" height="70cm">
+        <img src="{{asset('storage/ProfilePicture/'.Auth::user()->filename)}}"  alt="User Image" / width="70cm" height="70cm">
 
         @endif
 
@@ -83,7 +83,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
         </div>
         <br>
         <div class="w3-container">
-          <p><i class="fa fa-id-card fa-fw w3-margin-right w3-large w3-text-yellow"></i> {{Auth::user()->ssn}}</p>
           <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-yellow"></i> {{Auth::user()->address}}</p>
           <p><i class="fa fa-mars fa-fw w3-margin-right w3-large w3-text-yellow"></i>
                         @php
@@ -95,10 +94,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
                          {
                             echo 'Female';
                          }
-                      @endphp</p>
-
-          <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-large w3-text-yellow"></i>{{Auth::user()->birthday}}</p>
-          <hr>
+                      @endphp</p> <hr>
           <br>
         </div>
       </div><br>
@@ -131,8 +127,8 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
   </div>
   
   <!-- End Page Container -->
-</div>
-
+  </div>
+                         
 <footer id="footer">
   @include('layouts.footer')
 </footer>

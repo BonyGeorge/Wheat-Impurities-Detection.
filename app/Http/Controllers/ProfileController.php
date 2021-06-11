@@ -22,7 +22,7 @@ class ProfileController extends Controller
 
     public function index(){
     	$user = Auth::user()->id;
-    	return view('pages.profile.profile',compact('user'));
+    	return view('pages.profile.profile', compact('user'));
 
     }
 
@@ -36,7 +36,7 @@ class ProfileController extends Controller
     {
     	$user = Auth::user()->id;
 
-            return view('pages.profile.editProfile',compact('user'));
+            return view('pages.profile.editProfile', compact('user'));
 
     }
 
@@ -55,8 +55,6 @@ class ProfileController extends Controller
 
                    'name'=> $request->name,
                    'email'=> $request->email,
-                   'ssn'=> $request->ssn,
-                   'birthday'=> $request->birthday,
                    'isMale'=> (int) $request->isMale,
                    'address'=> $request->address,
                    'email'=> $request->email,
@@ -73,12 +71,10 @@ class ProfileController extends Controller
 
        
 
-            $profile::where('id',Auth::user()->id)->update([
+            $profile::where('id', Auth::user()->id)->update([
 
                    'name'=> $request->name,
 				   'email'=> $request->email,
-			       'ssn'=> $request->ssn,
-			       'birthday'=> $request->birthday,
 			       'isMale'=> (int) $request->isMale,
 			       'address'=> $request->address,
 			       'email'=> $request->email,
