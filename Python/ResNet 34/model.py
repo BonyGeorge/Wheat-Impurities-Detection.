@@ -31,7 +31,7 @@ class ResidualBlock(nn.Module):
         else:
             self.shortcut = nn.Sequential()
             
-    def forward(self,x):
+    def forward(self, x):
         residual = x
         x = self.cnn1(x)
         x = self.cnn2(x)
@@ -75,7 +75,7 @@ class ResNet34(nn.Module):
         self.fc2 = nn.Linear(512, 168)
         self.fc3 = nn.Linear(512, 7)
         
-    def forward(self,x):
+    def forward(self, x):
         x = self.block1(x)
         x = self.block2(x)
         x = self.block3(x)
@@ -83,10 +83,12 @@ class ResNet34(nn.Module):
         x = self.block5(x)
         x = self.avgpool(x)
         x = x.view(x.size(0), -1)
+
         x1 = self.fc1(x)
         x2 = self.fc2(x)
         x3 = self.fc3(x)
-        return x1,x2,x3
+
+        return x1, x2 ,x3
 
     def prepo(self):
         """
@@ -114,19 +116,36 @@ class ResNet34(nn.Module):
         return pred
 
 model = models.resnet34()
-model.load_state_dict(torch.load(r'G:\D\Wheat-Impurities-Detection\Python\Resnet 34\best_resnet34_aug2.pth',
+model.load_state_dict(torch.load(r'G:\D\Wheat-Impurities-Detection\Wheat-Impurities-Detection\Python\ResNet 34\best_resnet34.pth',
                                  map_location=torch.device('cpu')), strict=False)
-model.eval()
 
-transform = transforms.Compose(
-    [transforms.ToTensor(),
+
+transform = transforms.Compose([
+     transforms.Resize(224),      
+     transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])  # Same as for your validation data, e.g. Resize, ToTensor, Normalize, ...
 
-img = Image.open(r"C:\Users\hp\Downloads\test3.jpg")  # Load image as PIL.Image
-x = transform(img)  # Preprocess image
-x = x.unsqueeze(0)  # Add batch dimension
+img = Image.open(r"C:\Users\hp\Downloads\test1.jpg")  # Load image as PIL.Image
+input = transform(img)  # Preprocess image
+input = torch.unsqueeze(input, 0)  # Add batch dimension
 
-output = model(x)  # Forward pass
-pred = torch.max(output, 1)  # Get predicted class if multi-class classification
-pred = torch.tensor(pred)
-print('Image predicted as ', pred)
+model.eval()
+
+# print(model)
+classes = ('Healthy Wheat', 'Leaf Rust', 'Stem Rust', 'Wild Oat')
+
+output = model(input)  # Forward pass
+
+prediction = int(torch.max(output.data, 1)[1].numpy())
+predicted_class = np.argmax(prediction)
+
+if (predicted_class == 0):
+    print ('Class Healthy Wheat.')
+elif (predicted_class == 1):
+    print ('Class Leaf Rust.')
+elif (predicted_class == 2):
+    print ('Class Stem Rust.')
+elif (predicted_class == 3):
+    print ('Class Wild Oat.')
+else :
+    print('Error in classification.')

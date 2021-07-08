@@ -33,6 +33,7 @@
   
   @endauth    
 
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
     aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -45,6 +46,15 @@
         </a>  
     </li>
     
+    <div class="dropdown">
+    <button class="btn btn-black dropdown-toggle"  style="background-color:black" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    @lang('lang.btn')
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="{{route('switchLan','en')}}">@lang('lang.english')</a>
+    <a class="dropdown-item" href="{{route('switchLan','ar')}}">@lang('lang.arabic')</a>
+    </div>
+</div>
       
           <!-- Authentication Links -->
           @guest

@@ -41,6 +41,13 @@ Route::get('/', function ()
 // Check if the user has accepted the verfication mail.
 Auth::routes(['verify' => true]);
 
+Route::get('locale/{locale}',function($locale){
+
+    Session::put('locale',$locale);
+    
+       return redirect()->back();
+    
+    })->name('switchLan');  //add name to router
 
 // Messages.
 Route::resource('messages', 'MessageController');
