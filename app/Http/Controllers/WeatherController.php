@@ -56,7 +56,7 @@ class WeatherController extends Controller
         $WeatherData->save();
 
         // Notification Condition
-        if ($temp >= 7 && $temp <= 155 && $hum >= 2 && $windspeed >= 2)
+        if ($temp >= 7 && $temp <= 14 && $hum >= 60 && $windspeed >= 30)
         {
             //$id= Auth::user()->id;
             $user = \App\User::find(1);
