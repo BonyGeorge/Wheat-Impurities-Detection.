@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
              print("data Added to Weather database");
          
         app('App\Http\Controllers\WeatherController')->getdata();
-        })->everyMinute();
+        })->hourly();
 
     //     $schedule->call(function(){
 
