@@ -2,14 +2,14 @@
 @extends('layouts.sidebar')
 
 @section('content')
-    <title>Wheat System | Requested Users.</title>
+    <title>@lang('lang.RUtitle')</title>
     <link rel="icon" href="favicon.ico">
 </head>
 
 
 <!-- Editable table -->
 <div class="carda">
-    <h3 class="card-header text-center font-weight-bold">Requested Users</h3>
+    <h3 class="card-header text-center font-weight-bold">@lang('lang.RUtitle2')</h3>
     <br><br><br><br><br><br>
     <div class="card-body">
 
@@ -32,10 +32,10 @@
                 
 
               <th class="text-center"> # </th>
-              <th class="text-center ">Person Name</th>
-              <th class="text-center">Email</th>
-              <th class="text-center">Role</th>
-              <th class="text-center">Accepted</th>
+              <th class="text-center ">@lang('lang.person')</th>
+              <th class="text-center">@lang('lang.email')</th>
+              <th class="text-center">@lang('lang.role')</th>
+              <th class="text-center">@lang('lang.accept1')</th>
             </tr>
           </thead>
           <tbody>
@@ -70,7 +70,7 @@
                     </h5>
                 <td>
                     <div class="text-center">
-                      <a href="/requestedusers/{{$user->id}}/edit" class="btn btn-warning btn-rounded" role="button" data-target="#elegantModalForm">Accept</a>
+                      <a href="/requestedusers/{{$user->id}}/edit" class="btn btn-warning btn-rounded" role="button" data-target="#elegantModalForm">@lang('lang.accept2')</a>
                     </div>
                   </span>
               

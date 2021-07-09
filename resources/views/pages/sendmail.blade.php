@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wheat System | Mailing.</title>
+    <title>@lang('lang.SEtitle')</title>
     <link rel="icon" href="Logo.png">
     <style>
    #mailone {
@@ -154,7 +154,7 @@
 
     <br>
     <br>
-    <h1 style='text-align:center;'>Send mail</h1>
+    <h1 style='text-align:center;'>@lang('lang.SEtitle2')</h1>
     <br><br>
     {!! Form::open(['action' => 'MailController@mail' , 'method' => 'POST']) !!}
         @csrf

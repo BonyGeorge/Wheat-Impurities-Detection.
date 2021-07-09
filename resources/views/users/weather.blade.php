@@ -2,7 +2,7 @@
     @extends('layouts.sidebar')
     
     @section('content')
-        <title>Wheat System | Weather Data.</title>
+        <title>@lang('lang.weatherD')</title>
         <link rel="icon" href=" 3.png">
         <style>
         span {
@@ -16,7 +16,7 @@
     
     <!-- Editable table -->
     <div class="carda">
-        <h3 class="card-header text-center font-weight-bold"> Weather Readings </h3>
+        <h3 class="card-header text-center font-weight-bold"> @lang('lang.weatherTitle')</h3>
         <br><br><br><br><br><br>
         <div class="card-body">
     
@@ -38,12 +38,12 @@
                 <tr style="background-image: linear-gradient(90deg, rgba(174,174,179,0.258140756302521) 0%, rgba(245,222,9,1) 35%, rgba(255,215,0,1) 100%);">
                
     
-                  <th class="text-center"> Reading Hour </th>
-                  <th class="text-center"> Reading Time </th>
-                  <th class="text-center ">Temprature</th>
-                  <th class="text-center">humidity</th>
-                  <th class="text-center">Wind Speed</th>
-                  <th class="text-center">Wind Direction</th>
+                  <th class="text-center">@lang('lang.readingH') </th>
+                  <th class="text-center"> @lang('lang.readingT') </th>
+                  <th class="text-center ">@lang('lang.Temp')</th>
+                  <th class="text-center">@lang('lang.Humd')</th>
+                  <th class="text-center">@lang('lang.windS')</th>
+                  <th class="text-center">@lang('lang.windD')</th>
                 </tr>
               </thead>
               <tbody>

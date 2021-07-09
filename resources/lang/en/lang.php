@@ -1,5 +1,6 @@
 <?php
  return [
+//Welcome page
  'welcome' => 'Welcome To Our ',
  'title'=> 'Wheat System',
  'Misstitle'=> 'Our Mission',
@@ -13,5 +14,49 @@
  'msg' => 'Send Message',
  'btn' => 'Language',
  'arabic' => 'Arabic',
- 'english' => 'English'
+ 'english' => 'English',
+
+// Notification
+ 'Notification' =>'Notification Time ',
+ 'NotificationM' =>'Notification Message',
+ 'NotificationTitle' =>'Wheat System | Notification.',
+ 'NotificationTitle2' =>'Weather Notification Table',
+
+ //Wind Readings
+ 'weatherD' =>'Wheat System | Weather Data.',
+ 'weatherTitle' => 'Weather Readings For Today',
+ 'readingH' => 'Reading Hour',
+ 'readingT' => 'Reading Time',
+ 'Temp' => 'Temprature',
+ 'Humd' => 'Humidity',
+ 'windS' => 'Wind Speed',
+ 'windD' => 'Wind Direction',
+
+ //Request Users
+ 'RUtitle' => 'Wheat System | Requested Users.',
+ 'RUtitle2' => 'Requested Users',
+ 'person' => 'Person Name',
+ 'email' => 'E-mail',
+ 'role' => 'Role',
+ 'accept1' => 'Accepted',
+ 'accept2' => 'Accept',
+
+//Send E-mail
+'SEtitle' => 'Wheat System | Mailing.',
+'SEtitle2' => 'Send mail',
+'user' => 'User :',
+'from' => 'From :',
+'mailS' => 'Mail subject : ',
+'mailC' => 'Mail content :',
+'button' => 'Send To User',
+'message1' => 'Mail Success.',
+'message2' => 'Mail has been sent. ',
+ 
+
+
+
+
+
+
+
  ];

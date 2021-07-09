@@ -2,13 +2,13 @@
     @extends('layouts.sidebar')
     
     @section('content')
-        <title>Wheat System | Notification.</title>
+        <title>@lang('lang.NotificationTitle')</title>
         <link rel="icon" href=" 3.png">
     </head>
     
     <!-- Editable table -->
     <div class="carda">
-        <h3 class="card-header text-center font-weight-bold">Weather Notification Table</h3>
+        <h3 class="card-header text-center font-weight-bold">@lang('lang.NotificationTitle2')</h3>
         <br><br><br><br><br><br>
         <div class="card-body">
 
@@ -21,8 +21,8 @@
                
     
                   <th class="text-center"> #</th>
-                  <th class="text-center"> Notification Time </th>
-                  <th class="text-center"> Notification Message </th>
+                  <th class="text-center"> @lang('lang.Notification')</th>
+                  <th class="text-center"> @lang('lang.NotificationM') </th>
 
                 </tr>
               </thead>
