@@ -104,19 +104,19 @@
               <div class="info">
                 <div class="address">
                     <i class="fas fa-search-location "></i>
-                  <h4>@lang('lang.location'):</h4>
+                  <h4>@lang('lang.location')</h4>
                   <p>Cairo, Egypt.</p>
                 </div>
   
                 <div class="email">
                     <i class="fas fa-envelope-open-text"></i>
-                  <h4>@lang('lang.email'):</h4>
+                  <h4>@lang('lang.email')</h4>
                   <p> info.WheatSystem@gmail.com</p>
                 </div>
   
                 <div class="phone">
                     <i class="fas fa-phone"></i>
-                  <h4>@lang('lang.call'):</h4>
+                  <h4>@lang('lang.call')</h4>
                   <p> +022 012 0282 0504</p>
                 </div>
   

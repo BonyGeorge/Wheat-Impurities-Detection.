@@ -4,7 +4,7 @@
 @section('content')
 
 <html>
-<title> Wheat System | Edit Profile.</title>
+<title> @lang('lang.edittitle') </title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -114,7 +114,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 
    <h6 class="w3-text-yellow"> <i class="fa fa-upload icon"></i>
     <input type="file" name="filename" style="  width: 60%; margin:10px; "></div>
-    <button type="submit" name="Save_Edits"  class = "btn btn-warning">Save Edits</button>
+    <button type="submit" name="Save_Edits"  class = "btn btn-warning"> @lang('lang.save') </button>
   
         
       </div><br> 

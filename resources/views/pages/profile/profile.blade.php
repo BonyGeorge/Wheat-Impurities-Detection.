@@ -4,7 +4,7 @@
 @section('content')
 
 <html>
-<title> Wheat System | Your Profile.</title>
+<title> @lang('lang.profiletitle') </title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -116,14 +116,14 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
     <div class="w3-twothird">
     
     <div class="w3-container w3-card w3-white">
-        <h2 class="w3-text-black w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-yellow"></i>Contact Info</h2>
+        <h2 class="w3-text-black w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-yellow"></i> @lang('lang.contact') </h2>
         <div class="w3-container">
-          <h6 class="w3-text-yellow"><i class="fa fa-envelope fa-fw w3-margin-right"></i>E-mail</h6>
+          <h6 class="w3-text-yellow"><i class="fa fa-envelope fa-fw w3-margin-right"></i> @lang('lang.mail2') </h6>
           <p> {{Auth::user()->email}}</p>
           <hr>
         </div>
         <div class="w3-container">
-          <h6 class="w3-text-yellow"><i class="fa fa-mobile fa-fw w3-margin-right"></i>Phone</h6>
+          <h6 class="w3-text-yellow"><i class="fa fa-mobile fa-fw w3-margin-right"></i> @lang('lang.phone') </h6>
           <p> {{Auth::user()->mobile}}</p>
           <hr>
         </div>
@@ -132,7 +132,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
       <br>
       <br>
       <br>
-      <a type = "button" class="button" href="/profile/{{Auth::user()->id}}/edit" type="submit" style="vertical-align:middle"><span>Edit Profile </span></a>
+      <a type = "button" class="button" href="/profile/{{Auth::user()->id}}/edit" type="submit" style="vertical-align:middle"><span> @lang('lang.edit') </span></a>
     <!-- End Right Column -->
     </div>
     
