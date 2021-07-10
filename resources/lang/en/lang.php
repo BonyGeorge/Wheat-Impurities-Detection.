@@ -84,7 +84,13 @@
 'p2' => 'Its simple all you have to do is upload a video of the place you want to inspect, and our program will identify it for you.',
 'click' => 'Click here ',
 
-
+//login
+'logtitle' => 'Wheat | Login',
+'log' => 'Login',
+'mail' => 'E-Mail Address:',
+'pass' => 'Password:',
+'remember' => 'Remember Me',
+'forget' => 'Forgot Your Password?',
 
 
 
