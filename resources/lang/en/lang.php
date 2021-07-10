@@ -1,6 +1,7 @@
 <?php
  return [
 //Welcome page
+'Start' =>'Welcome to Wheat System',
  'welcome' => 'Welcome To Our ',
  'title'=> 'Wheat System',
  'Misstitle'=> 'Our Mission',
@@ -73,9 +74,9 @@
 
 //Upload
 'UPtitle' => 'Wheat System| Upload Video/Image.',
-'UPtitle2' => 'Send mail',
-'user' => 'User :',
-'from' => 'From :',
+'h3' => 'Upload Video For Classification.',
+'h6' => 'Our program will classify the healthy wheat derived from wild oats and wheat infected with rust.',
+'select' => 'Select Video',
 'mailS' => 'Mail subject : ',
 'mailC' => 'Mail content :',
 'button' => 'Send To User',
