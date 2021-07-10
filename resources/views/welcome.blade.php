@@ -69,12 +69,12 @@
                               -webkit-text-fill-color: transparent;">@lang('lang.title')</span></h1>
                             <br><br>
                             <h2 style="text-decoration: underline solid  #FFBA01; font-size: 2em;" class="Mission">@lang('lang.Misstitle')</h2>
-                            <p style="font-size: 1.5em;" class="Mpara">@lang('lang.mission').</p>
+                            <p style="font-size: 1.5em;" class="Mpara">@lang('lang.mission')</p>
                             <br><br>
                             <br>
                             <h2 style="text-decoration: underline solid  #FFBA01; font-size: 2em;" class="Vision">@lang('lang.Vistitle')</h2>
                             <br>
-                            <p style="font-size: 1.5em;" class="Vpara">@lang('lang.vision').</p>
+                            <p style="font-size: 1.5em;" class="Vpara">@lang('lang.vision')</p>
                             
 
                         </div>
