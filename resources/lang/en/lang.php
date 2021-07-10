@@ -103,5 +103,11 @@
 'resttitle' => 'Wheat | Reset Password',
 'rest' => 'Reset Password',
 
-
+//Profile
+'profiletitle' => 'Wheat System | Your Profile.',
+'log' => 'Login',
+'mail' => 'E-Mail Address:',
+'pass' => 'Password:',
+'remember' => 'Remember Me',
+'forget' => 'Forgot Your Password?',
  ];
