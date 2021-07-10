@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wheat System| Upload Video/Image.</title>
+    <title> @lang('lang.UPtitle') </title>
     <link rel="icon" href="Logo.png">
     <head>
     <meta charset="utf-8">
@@ -116,8 +116,8 @@
 
     <div class="container mt-5">
         <form action="{{URL('/upload')}}" method="post" enctype="multipart/form-data">
-          <h3 class="text-center mb-5">Upload Video For Classification.</h3>
-          <h6 class="text-center mb-5"> Our program will classify the healthy wheat derived from wild oats and wheat infected with rust. </h6>
+          <h3 class="text-center mb-5"> @lang('lang.h3') </h3>
+          <h6 class="text-center mb-5"> @lang('lang.h6') </h6>
             @csrf
             @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -137,13 +137,13 @@
 
             <div class="custom-file">
                 <input type="file" name="file" class="custom-file-input" id="chooseFile">
-                <label class="custom-file-label" for="chooseFile">Select Video</label>
+                <label class="custom-file-label" for="chooseFile"> @lang('lang.select') </label>
             </div>
             <br>
             <br>
             <br>
             <button class="button" type="submit" name="submit"  class="btn btn-primary btn-block mt-4" >
-                Upload Videos
+              @lang('lang.UP') 
             </button>
         </form>
         
@@ -152,8 +152,8 @@
     <div class="container">
       <br>
       
-  <h2 class="text-center mb-5">For more info about our system</h2>
-  <button type="button" class="cbutton" data-toggle="collapse" data-target="#demo">Click here</button>
+  <h2 class="text-center mb-5"> @lang('lang.h2') </h2>
+  <button type="button" class="cbutton" data-toggle="collapse" data-target="#demo"> @lang('lang.click') </button>
   <div id="demo" class="collapse">
  <p class="text-center mb-5"> @lang('lang.p1')<br>
  @lang('lang.p2') </p> 
