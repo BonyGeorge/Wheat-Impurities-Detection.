@@ -116,4 +116,18 @@
 'save' => 'Save Edits',
 
 
+//View Messages
+'messagetitle' => 'Wheat | Messages.',
+'messagetittle2' => 'Your Messages',
+'mail3' => 'E-mail',
+'name2' => 'Name',
+'sub' => 'Subject',
+'mess' => 'Message',
+'delete' => 'Delete',
+'mess2' => 'No data to show',
+'confirmdelete' => 'Confirm Delete',
+'mess3' => 'Are You Sure Want To Delete?',
+'cancel' => 'Cancel',
+'yes' => 'Yes, Delete',
+
  ];
