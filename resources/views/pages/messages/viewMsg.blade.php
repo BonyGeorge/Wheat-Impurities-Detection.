@@ -2,14 +2,14 @@
     @extends('layouts.sidebar')
     
     @section('content')
-        <title>Wheat | Messages.</title>
+        <title>@lang('lang.messagetitle')</title>
         <link rel="icon" href=" 3.png">
     </head>
     
     
     <!-- Editable table -->
     <div class="carda">
-        <h3 class="card-header text-center font-weight-bold">Our Messages</h3>
+        <h3 class="card-header text-center font-weight-bold">@lang('lang.messagetittle2')</h3>
         <br><br><br><br><br><br>
         <div class="card-body">
     
@@ -31,12 +31,12 @@
           <tr style="background-image: linear-gradient(90deg, rgba(174,174,179,0.258140756302521) 0%, rgba(245,222,9,1) 35%, rgba(255,215,0,1) 100%);">
                
     
-                  <th class="text-center"> # </th>
-                  <th class="text-center ">Name</th>
-                  <th class="text-center">Email</th>
-                  <th class="text-center">Subject</th>
-                  <th class="text-center">Message</th>
-                  <th class="text-center">Delete</th>
+            <th class="text-center"> # </th>
+            <th class="text-center ">@lang('lang.name2')</th>
+            <th class="text-center">@lang('lang.mail3')</th>
+            <th class="text-center">@lang('lang.sub')</th>
+            <th class="text-center">@lang('lang.mess')</th>
+            <th class="text-center">@lang('lang.delete')</th>
                 </tr>
               </thead>
               <tbody>
@@ -56,9 +56,9 @@
                 <td class="pt-3-half">{{$Message->message}}</td>
                 <td class="pt-3-half">
                     <a href="javascript:;" data-toggle="modal" onclick="deleteData({{$Message->id}})" 
-                      data-target="#DeleteModal" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> Delete</a> </td>
+                      data-target="#DeleteModal" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> @lang('lang.delete') </a> </td>
                   @empty
-          <td colspan="9"><center><-   No data to show   -></center> </td>
+          <td colspan="9"><center>@lang('lang.mess2')</center> </td>
       </tr>
          @endforelse  
                   
@@ -75,17 +75,17 @@
           <form action="" id="deleteForm" method="post">
               <div class="modal-content">
                   <div class="modal-header bg-danger">
-                      <h4 class="modal-title text-center" style="color: white">Confirm Delete</h4>
+                      <h4 class="modal-title text-center" style="color: white">@lang('lang.confirmdelete')</h4>
                   </div>
                   <div class="modal-body">
                       {{ csrf_field() }}
                       {{ method_field('DELETE') }}
-                      <p class="text-center">Are You Sure Want To Delete ?</p>
+                      <p class="text-center">@lang('lang.mess3')</p>
                   </div>
                   <div class="modal-footer">
                       <center>
-                          <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                          <button type="submit" name="" class="btn btn-danger" data-dismiss="modal" onclick="formSubmit()">Yes, Delete</button>
+                          <button type="button" class="btn btn-success" data-dismiss="modal">@lang('lang.cancel')</button>
+                          <button type="submit" name="" class="btn btn-danger" data-dismiss="modal" onclick="formSubmit()">@lang('lang.yes')</button>
                       </center>
                   </div>
               </div>

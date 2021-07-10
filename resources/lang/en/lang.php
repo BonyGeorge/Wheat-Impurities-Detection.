@@ -124,7 +124,7 @@
 'sub' => 'Subject',
 'mess' => 'Message',
 'delete' => 'Delete',
-'mess2' => 'No data to show',
+'mess2' => '<-   No data to show  ->',
 'confirmdelete' => 'Confirm Delete',
 'mess3' => 'Are You Sure Want To Delete?',
 'cancel' => 'Cancel',
