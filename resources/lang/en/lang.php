@@ -93,5 +93,12 @@
 'forget' => 'Forgot Your Password?',
 
 
+//Register
+'regtitle' => 'Wheat | Register',
+'register' => 'Register',
+'confirm' => 'Confirm Password:',
+'name' => 'Name: ',
+
+
 
  ];
