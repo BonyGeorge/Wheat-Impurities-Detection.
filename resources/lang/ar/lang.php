@@ -65,7 +65,7 @@
  //Admin sidebar
  'RU' => 'طلبات قبول المسخدمين ',
  'View' => 'عرض الرسائل',
- 'admin' => 'مشرف',
+ 'admin' => 'المشرف',
  
 //Sidebar
 'logout' =>'تسجيل خروج',
@@ -82,8 +82,8 @@
 'select' => 'حدد الفيديو',
 'UP' => ' تحميل الفيديو ',
 'h2' => 'لمزيد من المعلومات حول نظامنا',
-'p1' => 'Our system is meant to help you distinguish between healthy wheat, wild oats, and wheat affected with rust.',
-'p2' => 'Its simple all you have to do is upload a video of the place you want to inspect, and our program will identify it for you.',
-'click' => 'Click here ',
+'p1' => 'يهدف نظامنا إلى مساعدتك على التمييز بين القمح الصحي والشوفان البري والقمح المصاب بالصدأ.',
+'p2' => 'الأمر بسيط ، كل ما عليك فعله هو تحميل مقطع فيديو للمكان الذي تريد فحصه ، وسيقوم برنامجنا بتحديده لك.',
+'click' => 'انقر هنا',
 
  ];

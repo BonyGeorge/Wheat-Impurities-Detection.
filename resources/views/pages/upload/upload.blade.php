@@ -155,8 +155,8 @@
   <h2 class="text-center mb-5">For more info about our system</h2>
   <button type="button" class="cbutton" data-toggle="collapse" data-target="#demo">Click here</button>
   <div id="demo" class="collapse">
- <p class="text-center mb-5"> Our system is meant to help you distinguish between healthy wheat, wild oats, and wheat affected with rust.<br>
-  It's simple; all you have to do is upload a video of the place you want to inspect, and our program will identify it for you. </p> 
+ <p class="text-center mb-5"> @lang('lang.p1')<br>
+ @lang('lang.p2') </p> 
   </div>
 </div>
 
