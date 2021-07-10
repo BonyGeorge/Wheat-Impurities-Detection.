@@ -99,6 +99,9 @@
 'confirm' => 'Confirm Password:',
 'name' => 'Name: ',
 
+//Reset
+'resttitle' => 'Wheat | Reset Password',
+'rest' => 'Reset Password',
 
 
  ];
