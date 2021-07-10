@@ -1,4 +1,4 @@
-<title>Wheat | Reset Password</title>
+<title>HIIIIIIIIII</title>
 <link rel="icon" href=" Logo.png">
 @extends('layouts.navbar')
 

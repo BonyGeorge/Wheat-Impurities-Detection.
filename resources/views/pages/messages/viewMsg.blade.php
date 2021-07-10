@@ -78,8 +78,6 @@
                       <h4 class="modal-title text-center" style="color: white">@lang('lang.confirmdelete')</h4>
                   </div>
                   <div class="modal-body">
-                      {{ csrf_field() }}
-                      {{ method_field('DELETE') }}
                       <p class="text-center">@lang('lang.mess3')</p>
                   </div>
                   <div class="modal-footer">

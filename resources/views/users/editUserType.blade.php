@@ -20,7 +20,6 @@
    
 
 
-{{csrf_field()}}
       <div class="modal-header text-center">
         <h3 class="modal-title w-100 dark-grey-text font-weight-bold my-3" id="myModalLabel"><strong>Change Role.</strong></h3>
       </div>
