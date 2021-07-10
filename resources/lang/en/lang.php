@@ -59,11 +59,12 @@
 'class' => 'Classification',
 'WeatherI' => 'Weather Informations',
 'WeatherN' => 'Weather Notifications',
-
+'user2' => 'User',
 
  //Admin sidebar
 'RU' => 'Requested Users',
 'View' => 'View Messages',
+'admin' => 'Admin',
 
 //Sidebar
 'logout' =>'Logout',
@@ -77,11 +78,11 @@
 'h3' => 'Upload Video For Classification.',
 'h6' => 'Our program will classify the healthy wheat derived from wild oats and wheat infected with rust.',
 'select' => 'Select Video',
-'mailS' => 'Mail subject : ',
-'mailC' => 'Mail content :',
-'button' => 'Send To User',
-'message1' => 'Mail Success.',
-'message2' => 'Mail has been sent. ',
+'UP' => ' Upload Videos ',
+'h2' => 'For more info about our system',
+'p1' => 'Our system is meant to help you distinguish between healthy wheat, wild oats, and wheat affected with rust.',
+'p2' => 'Its simple all you have to do is upload a video of the place you want to inspect, and our program will identify it for you.',
+'click' => 'Click here ',
 
 
 

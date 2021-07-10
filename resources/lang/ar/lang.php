@@ -60,10 +60,12 @@
 'class' => 'تصنيف',
 'WeatherI' => 'معلومات الطقس',
 'WeatherN' => 'الاشعارات',
+'user2' => 'المستخدم',
 
  //Admin sidebar
  'RU' => 'طلبات قبول المسخدمين ',
  'View' => 'عرض الرسائل',
+ 'admin' => 'مشرف',
  
 //Sidebar
 'logout' =>'تسجيل خروج',
@@ -73,5 +75,15 @@
 'reg' => 'إنشاء حساب',
 
 
+//Upload
+'UPtitle' => 'تحميل الفيديو / الصورة.',
+'h3' => 'تحميل الفيديو من أجل التصنيف.',
+'h6' => 'سيقوم برنامجنا بتصنيف القمح الصحي المستخرج من الشوفان البري والقمح المصاب بالصدأ.',
+'select' => 'حدد الفيديو',
+'UP' => ' تحميل الفيديو ',
+'h2' => 'لمزيد من المعلومات حول نظامنا',
+'p1' => 'Our system is meant to help you distinguish between healthy wheat, wild oats, and wheat affected with rust.',
+'p2' => 'Its simple all you have to do is upload a video of the place you want to inspect, and our program will identify it for you.',
+'click' => 'Click here ',
 
  ];
