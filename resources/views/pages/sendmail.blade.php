@@ -159,25 +159,29 @@
     {!! Form::open(['action' => 'MailController@mail' , 'method' => 'POST']) !!}
         @csrf
     
-        <legend style='text-align:center;'>{!! Form::label('User :') !!}    <span style="color: red"> *</span><br>
+        
+        <legend style='text-align:center;'>@lang('lang.from') {{Auth::user()->email}}</legend>
+        <br>
+        <legend style='text-align:center;'>{!! Form::label('') !!}    <span style="color: rgb(14, 13, 13)"> @lang('lang.user')</span><br>
             {!! Form::select('selection', \App\User::pluck('email','id'), ['class' => 'mdb-select md-form', 'style' => 'margi-left:50%']) !!}    
               <br>
-              </legend> 
-        <legend style='text-align:center;'>From : {{Auth::user()->email}}</legend>
-        <br>
+              </legend>
+              <br> 
 
-        <legend style='text-align:center;'>Mail subject :  <span style="color: red"> *</span></legend> 
+        <legend style='text-align:center;'>@lang('lang.mailS')  <span style="color: red"> *</span></legend>
+        <br> 
         <div id='tarea'>
             {!! Form::text('mailsubject', null ,['id' =>'msubject']) !!}
         </div>
         <br>
-        <legend style='text-align:center;'>Mail content :  <span style="color: red"> *</span></legend>
+        <legend style='text-align:center;'>@lang('lang.mailC')  <span style="color: red"> *</span></legend>
+        <br>
         <div id='tareaa'>
               {!! Form::textarea('mailcontent', null ,['rows' => '8', 'cols' => '50', 'id' => 'mcontent']) !!}
         </div>
         <br><br>
         <div>
-            {!! Form::submit('Send To User', ['class' =>'mbutton',  'value' => 'send1', 'name' => 'action', 'id' => 'send1', 'data-target' => '#centralModalSuccess', 'data-toggle' => 'modal']) !!}  
+            {!! Form::submit('Send', ['class' =>'mbutton',  'value' => 'send1', 'name' => 'action', 'id' => 'send1', 'data-target' => '#centralModalSuccess', 'data-toggle' => 'modal']) !!}  
         </div>
     {!! Form::close() !!}
 </body>
@@ -190,7 +194,7 @@
     <div class="modal-content">
       <!--Header-->
       <div class="modal-header">
-        <p class="heading lead">Mail Success.</p>
+        <p class="heading lead"> @lang('lang.message1') </p>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" class="white-text">&times;</span>
@@ -201,7 +205,7 @@
       <div class="modal-body">
         <div class="text-center">
           <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-          <p>Mail has been sent. </p>
+          <p> @lang('lang.message2') </p>
         </div>
       </div>
     </div>

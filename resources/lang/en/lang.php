@@ -44,11 +44,11 @@
 //Send E-mail
 'SEtitle' => 'Wheat System | Mailing.',
 'SEtitle2' => 'Send mail',
-'user' => 'User :',
+'user' => 'To :',
 'from' => 'From :',
 'mailS' => 'Mail subject : ',
 'mailC' => 'Mail content :',
-'button' => 'Send To User',
+'button' => 'Send',
 'message1' => 'Mail Success.',
 'message2' => 'Mail has been sent. ',
  
