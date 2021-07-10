@@ -102,6 +102,7 @@
 //Reset
 'resttitle' => 'Wheat | Reset Password',
 'rest' => 'Reset Password',
+'sendd' => 'SEND PASSWORD RESET LINK',
 
 //Profile
 'profiletitle' => 'Wheat System | Your Profile.',
