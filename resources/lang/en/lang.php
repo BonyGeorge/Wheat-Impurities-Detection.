@@ -107,6 +107,13 @@
 'profiletitle' => 'Wheat System | Your Profile.',
 'contact' => 'Contact Info',
 'mail2' => 'E-mail',
+'phone' => 'Phone',
 'edit' => 'Edit Profile',
+
+
+//EditProfile
+'edittitle' => ' Wheat System | Edit Profile.',
+'save' => 'Save Edits',
+
 
  ];
