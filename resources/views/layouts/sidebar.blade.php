@@ -40,7 +40,7 @@
           
           onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
-           {{ __('Logout')  }}
+            @lang('lang.logout') 
        </a>
        
 
