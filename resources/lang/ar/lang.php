@@ -1,6 +1,7 @@
 <?php
  return [
      //Welcome page
+ 'Start' => 'مرحبا بك في وييت سيستم',
  'welcome' => 'مرحبا بك في ',
  'title'=> 'وييت سيستم',
  'Misstitle'=> 'مهمتنا هي',
