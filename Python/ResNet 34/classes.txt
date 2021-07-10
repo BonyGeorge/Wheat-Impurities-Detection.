@@ -1,4 +1,4 @@
-Healthy Wheat
-Leaf Rust
-Stem Rust
-Wild Oat
+0, Healthy Wheat
+1, Leaf Rust
+2, Stem Rust
+3, Wild Oat
