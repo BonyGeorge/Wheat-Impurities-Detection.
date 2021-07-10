@@ -28,7 +28,7 @@
         <strong > {{ Auth::user()->name }}</strong>
       </span>
       <br>
-      <span class="user-role" style="margin-left:25%"> @lang('lang.user') </span>
+      <span class="user-role" style="margin-left:25%"> @lang('lang.admin') </span>
         <span class="user-status">
         </span>
       </div>
