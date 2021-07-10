@@ -105,9 +105,8 @@
 
 //Profile
 'profiletitle' => 'Wheat System | Your Profile.',
-'log' => 'Login',
-'mail' => 'E-Mail Address:',
-'pass' => 'Password:',
-'remember' => 'Remember Me',
-'forget' => 'Forgot Your Password?',
+'contact' => 'Contact Info',
+'mail2' => 'E-mail',
+'edit' => 'Edit Profile',
+
  ];
