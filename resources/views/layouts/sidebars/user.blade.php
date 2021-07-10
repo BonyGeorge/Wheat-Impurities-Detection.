@@ -27,7 +27,7 @@
         <strong > {{ Auth::user()->name }}</strong>
       </span>
       <br>
-      <span class="user-role" style="margin-left:22%">User</span>
+      <span class="user-role" style="margin-left:22%"> @lang('lang.user') </span>
         <span class="user-status">
         </span>
       </div>
@@ -38,7 +38,7 @@
         <li class="sidebar">
           <a href="/profile">
             <i class="fa fa-user"></i>
-            <span>Your Profile</span>
+            <span> @lang('lang.profile') </span>
           </a>
           </li>
 
@@ -52,27 +52,27 @@
           <li class="sidebar">
           <a href="{{ url('/sendmail') }}">
             <i class="fa fa-envelope"></i>
-            <span>Send Mail</span>
+            <span> @lang('lang.send') </span>
           </a>
           </li>
 
           <li class="sidebar">
           <a href="{{ url('/upload') }}">
             <i class="fa fa-upload"></i>
-            <span>Classification</span>
+            <span> @lang('lang.class') </span>
           </a>
           </li>
 
           <li class="sidebar">
             <a href="/weather_getData">
               <i class="fa fa-cloud"></i>
-              <span>Weather Informations</span>
+              <span> @lang('lang.WeatherI') </span>
             </a>
             </li>
 
             <li class="sidebar">
               <a href="/wnotifications">
                 <i class="fa fa-bell"></i>
-                <span>Weather Notifications</span>
+                <span> @lang('lang.WeatherN') </span>
               </a>
               </li>

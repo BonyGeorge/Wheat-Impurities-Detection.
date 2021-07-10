@@ -28,7 +28,7 @@
         <strong > {{ Auth::user()->name }}</strong>
       </span>
       <br>
-      <span class="user-role" style="margin-left:25%">Admin.</span>
+      <span class="user-role" style="margin-left:25%"> @lang('lang.user') </span>
         <span class="user-status">
         </span>
       </div>
@@ -42,7 +42,7 @@
         <li class="sidebar">
           <a href="/profile">
             <i class="fa fa-user"></i>
-            <span>Your Profile</span>
+            <span> @lang('lang.profile') </span>
           </a>
           </li>
 
@@ -51,7 +51,7 @@
           <li class="sidebar">
             <a href="{{ url('/sendmail') }}">
               <i class="fa fa-envelope"></i>
-              <span>Send Mail</span>
+              <span> @lang('lang.send') </span>
             </a>
             </li>
   
@@ -59,13 +59,13 @@
         <li class="sidebar">
           <a href="/requestedusers">
             <i class="fa fa-check"></i>
-            <span>Requested Users</span>
+            <span> @lang('lang.RU') </span>
           </a>
           </li>
 
           <li class="sidebar">
             <a href="{{ url('/messages') }}">
               <i class="fas fa-inbox"></i>
-              <span>View Messages</span>
+              <span> @lang('lang.View') </span>
             </a>
             </li>
