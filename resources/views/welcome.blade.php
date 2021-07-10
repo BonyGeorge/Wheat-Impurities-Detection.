@@ -4,8 +4,7 @@
 <html lang="en">
 
 <head>
-            <title>Wheat System| Welcome.</title>
-            
+            <title>@lang('lang.welcome')</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta charset="UTF-8" />
 

@@ -41,10 +41,6 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
       <ul class="navbar-nav ml-auto">
 
-      <li class="nav-item">
-        <a  class="nav-link" href="#about">Contact Us
-        </a>  
-    </li>
     
     <div class="dropdown">
     <button class="btn btn-black dropdown-toggle"  style="background-color:black" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

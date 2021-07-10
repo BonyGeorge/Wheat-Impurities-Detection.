@@ -51,9 +51,36 @@
 'button' => 'Send',
 'message1' => 'Mail Success.',
 'message2' => 'Mail has been sent. ',
- 
+
+//User sidebar
+'profile' => 'Your Profile',
+'send' => 'Send mail',
+'class' => 'Classification',
+'WeatherI' => 'Weather Informations',
+'WeatherN' => 'Weather Notifications',
 
 
+ //Admin sidebar
+'RU' => 'Requested Users',
+'View' => 'View Messages',
+
+//Sidebar
+'logout' =>'Logout',
+
+//Navbar
+'login' => 'Login',
+'reg' => 'Register',
+
+//Upload
+'UPtitle' => 'Wheat System| Upload Video/Image.',
+'UPtitle2' => 'Send mail',
+'user' => 'User :',
+'from' => 'From :',
+'mailS' => 'Mail subject : ',
+'mailC' => 'Mail content :',
+'button' => 'Send To User',
+'message1' => 'Mail Success.',
+'message2' => 'Mail has been sent. ',
 
 
 

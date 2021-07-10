@@ -9,6 +9,7 @@
     <title>@lang('lang.SEtitle')</title>
     <link rel="icon" href="Logo.png">
     <style>
+        
    #mailone {
         background-color: #3bde40;
         position: relative;
