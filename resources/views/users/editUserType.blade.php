@@ -47,18 +47,18 @@
         
   {!! Form::model($user, ['method' => 'GET', 'action' => ['RequestedUserController@update', $user]] ) !!}
 
-            @lang('lang.usernamee') <br>
-            {!! Form::text('name', null, ['class'=>'form-control' ,'placeholder' => 'UserName', 'readonly']) !!}
-            @lang('lang.userIdd') <br>
-            {!! Form::text('id', null, ['class'=>'form-control' ,'placeholder' => 'UserID', 'readonly']) !!}
+            @lang('lang.usernamee') <br> 
+            {!! Form::text('name', null, ['class'=>'form-control' ,'placeholder' => 'UserName', 'readonly']) !!} <br>
+            @lang('lang.userIdd') <br> 
+            {!! Form::text('id', null, ['class'=>'form-control' ,'placeholder' => 'UserID', 'readonly']) !!} <br>
             @lang('lang.emaill') <br>
-            {!! Form::email('email', null, ['class'=>'form-control' ,'placeholder' => 'Email','readonly']) !!}
+            {!! Form::email('email', null, ['class'=>'form-control' ,'placeholder' => 'Email','readonly']) !!} <br>
             <center>
               @lang('lang.usertypee')   <span style="color: red"> *</span> <br>
             {!! Form::select('selection', \App\User_type::pluck('name','id')) !!}    
             </center>
 
-          <br><br><br>
+          <br>
           <div class="text-center mb-3">
             {!! Form::submit("Change", ['class' => 'btn blue-gradient btn-block btn-rounded z-depth-1a']) !!}
           </div>
