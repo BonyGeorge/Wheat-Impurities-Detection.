@@ -13,11 +13,6 @@ class MessageController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
-    {       
-        
-    }
-
     public function index()
     {
         $messages = Message::all();
@@ -47,11 +42,13 @@ class MessageController extends Controller
      * @return \Illuminate\Http\Response
      */
      
-    public function destroy(Message $message)
+    public function show(Message $message)
     {
         $message->delete();
         return back()->with('success', 'Message has been deleted.');
     }
+
+
 
     public function deleteAllMesssages()
     {

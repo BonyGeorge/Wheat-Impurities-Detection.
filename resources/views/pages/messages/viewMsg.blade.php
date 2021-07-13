@@ -70,9 +70,10 @@
       </div>
 
       <div id="DeleteModal" class="modal fade text-danger" role="dialog">
+
         <div class="modal-dialog ">
           <!-- Modal content-->
-          <form action="" id="deleteForm" method="post">
+          <form action="" id="deleteForm" method="delete">
               <div class="modal-content">
                   <div class="modal-header bg-danger">
                       <h4 class="modal-title text-center" style="color: white">@lang('lang.confirmdelete')</h4>
@@ -80,6 +81,7 @@
                   <div class="modal-body">
                       <p class="text-center">@lang('lang.mess3')</p>
                   </div>
+
                   <div class="modal-footer">
                       <center>
                           <button type="button" class="btn btn-success" data-dismiss="modal">@lang('lang.cancel')</button>

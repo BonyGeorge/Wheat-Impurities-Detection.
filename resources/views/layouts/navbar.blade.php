@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="{{asset('css/mdb.min.css')}}">
 <!-- Your custom styles (optional) -->
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
+
+
 </head>
 <!--Navbar -->
 <nav class="mb-1 navbar navbar-expand-lg navbar-dark black">  

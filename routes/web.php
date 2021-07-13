@@ -5,6 +5,7 @@ use App\pages;
 use App\User;
 use App\Weather;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\MessageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,7 +54,9 @@ Route::get('locale/{locale}',function($locale){
 Route::resource('messages', 'MessageController');
 Route::get('/message', 'MessageController@store');
 Route::get('/messages', 'MessageController@index');
-Route::get('/message/{message}', 'MessageController@destroy');
+//Route::delete('/messages/{message}/destroy', 'MessageController@destroy')->name('messages.destroy');
+Route::delete('/messages/{message}',[MessageController::class, 'show']);
+
 
 // Profile Page
 Route::resource('/profile', 'ProfileController');
