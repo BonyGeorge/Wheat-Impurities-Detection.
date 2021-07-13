@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2021 at 11:14 PM
+-- Generation Time: Jul 13, 2021 at 08:12 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -82,6 +82,13 @@ CREATE TABLE `messages` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `replied_by` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `name`, `email`, `subject`, `message`, `created_at`, `updated_at`, `replied_by`) VALUES
+(1, 'j', 'nour@mail.com', 'i', 'h', '2021-07-10 15:14:59', '2021-07-10 15:14:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -204,9 +211,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `isMale`, `address`, `mobile`, `filename`, `remember_token`, `created_at`, `updated_at`, `type_id`, `accepted`) VALUES
-(1, 'Abanoub Lamie', 'abanoub@mail.com', NULL, '$2y$10$dbX6HZTD3zJKiEYAlx9SzeVAZF2CjBinG0gw3gljcOy6F1bNVR5h2', 1, NULL, '01202820504', 'phpBB94.tmp.jpg', 'c9fnBzSt734G33YmhFQ1V1TBOHEZqJKvFRWbm7ArKivL6Cuwcb973xqbDEvJ', '2020-12-16 11:08:08', '2021-06-11 15:19:55', 1, 0),
-(2, 'ayhaga', 'dlangworth@example.com', NULL, '$2y$10$bePwIEVCH.eRaREPFMjHHOOO8sD5aGeydEuIhSdIhCdbnVtnVUnly', 1, NULL, NULL, '', NULL, '2020-12-18 14:16:26', '2020-12-18 14:16:26', 2, 0),
-(3, 'ahmed', 'ahmed@ahmed.com', NULL, '$2y$10$hdHwvVBmVfG0Hwei0JiNhOlS69inpNOHKKdt3lZ7qOj/gvBAe9T7m', 1, NULL, NULL, '', NULL, '2020-12-18 14:20:14', '2020-12-18 14:20:14', 2, 0),
+(1, 'Abanoub Lamie', 'abanoub@mail.com', NULL, '$2y$10$dbX6HZTD3zJKiEYAlx9SzeVAZF2CjBinG0gw3gljcOy6F1bNVR5h2', 1, NULL, NULL, 'phpC0B9.tmp.JPG', 'Mbtq84s5ZVtuKoVp755DO7VjGvuGYBFNRyW50eEm3K3XTUCgjdgjubW1yjID', '2020-12-16 11:08:08', '2021-06-12 11:50:14', 1, 0),
+(2, 'ayhaga', 'dlangworth@example.com', NULL, '$2y$10$bePwIEVCH.eRaREPFMjHHOOO8sD5aGeydEuIhSdIhCdbnVtnVUnly', 1, NULL, NULL, '', NULL, '2020-12-18 14:16:26', '2021-07-10 15:17:00', 1, 1),
+(3, 'ahmed', 'ahmed@ahmed.com', NULL, '$2y$10$hdHwvVBmVfG0Hwei0JiNhOlS69inpNOHKKdt3lZ7qOj/gvBAe9T7m', 1, NULL, NULL, '', NULL, '2020-12-18 14:20:14', '2021-07-10 15:30:22', 1, 1),
 (4, 'test', 'ceo@ceo.com', NULL, '$2y$10$rZPbkSA.QH/GLGABfsBEDOW2Zi6xVK6Vo7P60znqIgTd2nOhT8V66', 1, NULL, NULL, '', NULL, '2020-12-18 14:21:34', '2020-12-18 14:21:34', 2, 0),
 (5, 'test', 'admin@gmail.com', NULL, '$2y$10$wndaD2iauPYZZx6pTwoPD.viPmL/Mn/VtToU9.HMbuC.LVCUH64.W', 1, NULL, NULL, '', NULL, '2020-12-18 14:24:17', '2020-12-18 14:24:17', 2, 0),
 (6, 'test', 'abanoubLamie16@gmail.com', NULL, '$2y$10$agQ1gReTF/YGFrsgu6dfpeL5dQJBU9yoUja8nPC7d9G/rAK936J0O', 1, NULL, NULL, '', NULL, '2020-12-18 14:26:18', '2020-12-18 14:26:18', 2, 0),
@@ -260,7 +267,8 @@ CREATE TABLE `videos` (
 INSERT INTO `videos` (`id`, `name`, `video_path`, `user_id`, `created_at`, `updated_at`) VALUES
 (1, '10_test.mp4', '/storage/uploads/10_test.mp4', 10, '2021-06-11 21:05:47', '2021-06-11 21:05:47'),
 (2, '10_test.mp4', '/storage/uploads/10_test.mp4', 10, '2021-06-11 21:07:20', '2021-06-11 21:07:20'),
-(3, '10_test.mp4', '/storage/uploads/10_test.mp4', 10, '2021-06-11 21:09:09', '2021-06-11 21:09:09');
+(3, '10_test.mp4', '/storage/uploads/10_test.mp4', 10, '2021-06-11 21:09:09', '2021-06-11 21:09:09'),
+(4, '10_test.mp4', '/storage/uploads/10_test.mp4', 10, '2021-06-11 23:12:01', '2021-06-11 23:12:01');
 
 -- --------------------------------------------------------
 
@@ -392,7 +400,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `frames`
 --
 ALTER TABLE `frames`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `images`
@@ -404,7 +412,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -434,7 +442,7 @@ ALTER TABLE `user_types`
 -- AUTO_INCREMENT for table `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `weather`
