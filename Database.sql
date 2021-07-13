@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2021 at 08:12 PM
+-- Generation Time: Jul 14, 2021 at 01:03 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -167,8 +167,15 @@ CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`, `user_id`) VALUES
+('abanoub@mail.com', '$2y$10$LQpb8vH3eblbMZpBc3pzOuaWVMwvu/.a6w9PwGZRhTllPTqUR98We', '2021-07-13 23:01:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -211,7 +218,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `isMale`, `address`, `mobile`, `filename`, `remember_token`, `created_at`, `updated_at`, `type_id`, `accepted`) VALUES
-(1, 'Abanoub Lamie', 'abanoub@mail.com', NULL, '$2y$10$dbX6HZTD3zJKiEYAlx9SzeVAZF2CjBinG0gw3gljcOy6F1bNVR5h2', 1, NULL, NULL, 'phpC0B9.tmp.JPG', 'Mbtq84s5ZVtuKoVp755DO7VjGvuGYBFNRyW50eEm3K3XTUCgjdgjubW1yjID', '2020-12-16 11:08:08', '2021-06-12 11:50:14', 1, 0),
+(1, 'Abanoub Lamie', 'abanoub@mail.com', NULL, '$2y$10$dbX6HZTD3zJKiEYAlx9SzeVAZF2CjBinG0gw3gljcOy6F1bNVR5h2', 1, NULL, NULL, 'phpC0B9.tmp.JPG', 'oh83wdA1MPN69do1W8Dad5wmOT7IvL1w4g16gCk93NZdYbrskjXvCOSGwXiV', '2020-12-16 11:08:08', '2021-06-12 11:50:14', 1, 0),
 (2, 'ayhaga', 'dlangworth@example.com', NULL, '$2y$10$bePwIEVCH.eRaREPFMjHHOOO8sD5aGeydEuIhSdIhCdbnVtnVUnly', 1, NULL, NULL, '', NULL, '2020-12-18 14:16:26', '2021-07-10 15:17:00', 1, 1),
 (3, 'ahmed', 'ahmed@ahmed.com', NULL, '$2y$10$hdHwvVBmVfG0Hwei0JiNhOlS69inpNOHKKdt3lZ7qOj/gvBAe9T7m', 1, NULL, NULL, '', NULL, '2020-12-18 14:20:14', '2021-07-10 15:30:22', 1, 1),
 (4, 'test', 'ceo@ceo.com', NULL, '$2y$10$rZPbkSA.QH/GLGABfsBEDOW2Zi6xVK6Vo7P60znqIgTd2nOhT8V66', 1, NULL, NULL, '', NULL, '2020-12-18 14:21:34', '2020-12-18 14:21:34', 2, 0),
@@ -412,7 +419,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `migrations`
