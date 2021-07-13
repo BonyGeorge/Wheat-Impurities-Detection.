@@ -131,4 +131,13 @@
 'cancel' => 'Cancel',
 'yes' => 'Yes, Delete',
 
+//Edit user type
+'editusertypetitle' => 'Wheat System | Edit User Type.',
+'editusertypetittle2' => 'Change Role',
+'usernamee' => 'User Name',
+'userIdd' => 'User ID',
+'emaill' => 'Email',
+'usertypee' => 'User Type',
+'changee' => 'Change ',
+
  ];

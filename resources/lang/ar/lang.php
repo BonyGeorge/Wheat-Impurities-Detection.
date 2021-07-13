@@ -130,4 +130,13 @@
 'cancel' => 'إلغاء',
 'yes' => 'نعم ، احذف',
 
+//Edit user type
+'editusertypetitle' => 'تعديل نوع المستخدم ',
+'editusertypetittle2' => 'تغيير الدور',
+'usernamee' => 'اسم االمستخدم',
+'userIdd' => 'معرف المستخدم',
+'emaill' => 'البريد الإلكتروني',
+'usertypee' => 'نوع المستخدم',
+'changee' => 'تغيير ',
+
  ];

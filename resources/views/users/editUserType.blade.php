@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>Wheat System | Edit User Type.</title>
+       <title> @lang('lang.editusertypetitle') </title>
        <link rel="icon" href="favicon.ico">
           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Google Fonts Roboto -->
@@ -21,7 +21,7 @@
 
 
       <div class="modal-header text-center">
-        <h3 class="modal-title w-100 dark-grey-text font-weight-bold my-3" id="myModalLabel"><strong>Change Role.</strong></h3>
+        <h3 class="modal-title w-100 dark-grey-text font-weight-bold my-3" id="myModalLabel"><strong>@lang('lang.editusertypetittle2')</strong></h3>
       </div>
       <!--Body-->
       <div class="modal-body mx-4">
@@ -47,20 +47,20 @@
         
   {!! Form::model($user, ['method' => 'GET', 'action' => ['RequestedUserController@update', $user]] ) !!}
 
-            {!! Form::label('User Name :') !!} <br>
+            @lang('lang.usernamee') <br>
             {!! Form::text('name', null, ['class'=>'form-control' ,'placeholder' => 'UserName', 'readonly']) !!}
-            {!! Form::label('User ID :') !!} <br>
+            @lang('lang.userIdd') <br>
             {!! Form::text('id', null, ['class'=>'form-control' ,'placeholder' => 'UserID', 'readonly']) !!}
-            {!! Form::label('Email :') !!} <br>
+            @lang('lang.emaill') <br>
             {!! Form::email('email', null, ['class'=>'form-control' ,'placeholder' => 'Email','readonly']) !!}
             <center>
-            {!! Form::label('User Type :') !!}   <span style="color: red"> *</span> <br>
+              @lang('lang.usertypee')   <span style="color: red"> *</span> <br>
             {!! Form::select('selection', \App\User_type::pluck('name','id')) !!}    
             </center>
 
           <br><br><br>
           <div class="text-center mb-3">
-            {!! Form::submit("Change.", ['class' => 'btn blue-gradient btn-block btn-rounded z-depth-1a']) !!}
+            {!! Form::submit("Change", ['class' => 'btn blue-gradient btn-block btn-rounded z-depth-1a']) !!}
           </div>
       </div>
       
